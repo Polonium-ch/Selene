@@ -4,6 +4,8 @@ Selene is a native macOS client for [Sunshine](https://github.com/LizardByte/Sun
 
 It started as an independent fork of [moonlight-qt](https://github.com/moonlight-stream/moonlight-qt), stripped down to a macOS-only build. Selene doesn't track moonlight-qt's releases or follow its roadmap — it has its own pace and its own decisions, pulling in upstream changes only when they're worth it.
 
+**Apple Silicon only.** This is a fully conscious decision, not an oversight, and it isn't going to change. Apple itself has been winding Intel Mac support down for years, so investing effort into supporting a platform on its way out doesn't make sense for a project starting fresh today. On top of that, there's no Intel Mac available to test against here, so any Intel compatibility claim would be untested and unreliable anyway. Intel support requests will be declined.
+
 ## Status
 
 Selene is early and actively changing. Today it still runs the streaming engine largely as inherited from moonlight-qt (Qt/QML UI, FFmpeg decode pipeline, VideoToolbox/Metal rendering, the custom GIP controller bridge for Xbox-licensed USB pads). Two things are in progress:
@@ -24,9 +26,10 @@ Nothing here is stable yet. Expect things to move around.
 
 ## Building
 
-macOS only.
+macOS on Apple Silicon (arm64) only. Intel Macs are not supported and are not a build target.
 
 ### Requirements
+- An Apple Silicon Mac
 - Qt 6.7 SDK or later
 - Xcode 14 or later
 - [create-dmg](https://github.com/sindresorhus/create-dmg) (only if building a DMG for distribution)
