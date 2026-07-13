@@ -1,0 +1,377 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E258EA6D98F44CF385868D4F /* SeleneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EE942A5DF940D78FD18E13 /* SeleneApp.swift */; };
+		C9092C27C3FF4041875E1AE1 /* DiscoveredHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C06EA806EF480B99D02898 /* DiscoveredHost.swift */; };
+		80162B573A1845BE98A6CFF8 /* HostDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBA60CB7093457EADBF089A /* HostDiscoveryService.swift */; };
+		A91FD0BD688E4540BE20373B /* HostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3118B0F02B0542F2810DA8F5 /* HostListViewModel.swift */; };
+		E1E131736CCE47B4AD69CC64 /* HostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828BA39B6C8040D8BF5AB825 /* HostListView.swift */; };
+		A1AA11F54B79450A899542AC /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6F8C5A6A3734BF894BD862A /* Network.framework */; };
+		96F14CB69A2F4405BF74CCAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF267D53FB4F6F937AE0F9 /* ContentView.swift */; };
+		C77E171592A24E8CAADAE05F /* DeviceCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA04F12621143DC9C8FED63 /* DeviceCardView.swift */; };
+		1797633F12274586ACF20FE7 /* StreamWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DD9E278E91427C92877038 /* StreamWindowView.swift */; };
+		02EA0BBC5EE6F8B29C04154F /* SunshineServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692314ABC98681F461920FDA /* SunshineServerInfo.swift */; };
+		4676534F704CCCEC64526011 /* selene.icon in Resources */ = {isa = PBXBuildFile; fileRef = 119C8462FD33355D88C9D301 /* selene.icon */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C676F0B3F87946CD939353B8 /* Selene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selene.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		155A18D57B3049BABCF10CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92EE942A5DF940D78FD18E13 /* SeleneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeleneApp.swift; sourceTree = "<group>"; };
+		B6C06EA806EF480B99D02898 /* DiscoveredHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredHost.swift; sourceTree = "<group>"; };
+		8FBA60CB7093457EADBF089A /* HostDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostDiscoveryService.swift; sourceTree = "<group>"; };
+		3118B0F02B0542F2810DA8F5 /* HostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostListViewModel.swift; sourceTree = "<group>"; };
+		828BA39B6C8040D8BF5AB825 /* HostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostListView.swift; sourceTree = "<group>"; };
+		D6F8C5A6A3734BF894BD862A /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = System/Library/Frameworks/Network.framework; sourceTree = SDKROOT; };
+		D9EF267D53FB4F6F937AE0F9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BDA04F12621143DC9C8FED63 /* DeviceCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCardView.swift; sourceTree = "<group>"; };
+		E3DD9E278E91427C92877038 /* StreamWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamWindowView.swift; sourceTree = "<group>"; };
+		692314ABC98681F461920FDA /* SunshineServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunshineServerInfo.swift; sourceTree = "<group>"; };
+		119C8462FD33355D88C9D301 /* selene.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = selene.icon; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEE338045B864D269E476A2B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1AA11F54B79450A899542AC /* Network.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7C780ADBB51C4BC39FD3629A = {
+			isa = PBXGroup;
+			children = (
+				F058718CECB94A76B8033842 /* Selene */,
+				1E26C383889C451ABC0E02EB /* Products */,
+				7D52D3DAE9AB465DAC2926E3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		1E26C383889C451ABC0E02EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C676F0B3F87946CD939353B8 /* Selene.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F058718CECB94A76B8033842 /* Selene */ = {
+			isa = PBXGroup;
+			children = (
+				92EE942A5DF940D78FD18E13 /* SeleneApp.swift */,
+				D9EF267D53FB4F6F937AE0F9 /* ContentView.swift */,
+				B6C06EA806EF480B99D02898 /* DiscoveredHost.swift */,
+				8FBA60CB7093457EADBF089A /* HostDiscoveryService.swift */,
+				692314ABC98681F461920FDA /* SunshineServerInfo.swift */,
+				3118B0F02B0542F2810DA8F5 /* HostListViewModel.swift */,
+				828BA39B6C8040D8BF5AB825 /* HostListView.swift */,
+				BDA04F12621143DC9C8FED63 /* DeviceCardView.swift */,
+				E3DD9E278E91427C92877038 /* StreamWindowView.swift */,
+				119C8462FD33355D88C9D301 /* selene.icon */,
+				155A18D57B3049BABCF10CEC /* Info.plist */,
+			);
+			path = Selene;
+			sourceTree = "<group>";
+		};
+		7D52D3DAE9AB465DAC2926E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D6F8C5A6A3734BF894BD862A /* Network.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		90E85C061F9C40DC98BAD800 /* Selene */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6DAC2BD4BFF4410B25AFB53 /* Build configuration list for PBXNativeTarget "Selene" */;
+			buildPhases = (
+				BBB2669850AE44C8A673E618 /* Sources */,
+				CEE338045B864D269E476A2B /* Frameworks */,
+				04F2D49A4DE14303B6C74982 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Selene;
+			productName = Selene;
+			productReference = C676F0B3F87946CD939353B8 /* Selene.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3C5303E358EE417F93855528 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					90E85C061F9C40DC98BAD800 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = A411DBCF92254401A09259B0 /* Build configuration list for PBXProject "Selene" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7C780ADBB51C4BC39FD3629A;
+			productRefGroup = 1E26C383889C451ABC0E02EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				90E85C061F9C40DC98BAD800 /* Selene */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04F2D49A4DE14303B6C74982 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4676534F704CCCEC64526011 /* selene.icon in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BBB2669850AE44C8A673E618 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E258EA6D98F44CF385868D4F /* SeleneApp.swift in Sources */,
+				96F14CB69A2F4405BF74CCAA /* ContentView.swift in Sources */,
+				C9092C27C3FF4041875E1AE1 /* DiscoveredHost.swift in Sources */,
+				80162B573A1845BE98A6CFF8 /* HostDiscoveryService.swift in Sources */,
+				02EA0BBC5EE6F8B29C04154F /* SunshineServerInfo.swift in Sources */,
+				A91FD0BD688E4540BE20373B /* HostListViewModel.swift in Sources */,
+				E1E131736CCE47B4AD69CC64 /* HostListView.swift in Sources */,
+				C77E171592A24E8CAADAE05F /* DeviceCardView.swift in Sources */,
+				1797633F12274586ACF20FE7 /* StreamWindowView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		44A96AA8236D409DBBDF6E7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				VALID_ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A50ECFEDFF2541A7A81BE6E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				VALID_ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		41844B7C27C547F29FE89EBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = selene;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Selene/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.useselene.selene;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		6740ADC94762450E9080DAA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = selene;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Selene/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.useselene.selene;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A411DBCF92254401A09259B0 /* Build configuration list for PBXProject "Selene" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44A96AA8236D409DBBDF6E7F /* Debug */,
+				A50ECFEDFF2541A7A81BE6E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6DAC2BD4BFF4410B25AFB53 /* Build configuration list for PBXNativeTarget "Selene" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41844B7C27C547F29FE89EBF /* Debug */,
+				6740ADC94762450E9080DAA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3C5303E358EE417F93855528 /* Project object */;
+}

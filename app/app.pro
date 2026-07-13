@@ -1,7 +1,7 @@
 QT += core quick network quickcontrols2 svg
 CONFIG += c++17
 
-TARGET = Moonlight
+TARGET = Selene
 
 include(../globaldefs.pri)
 

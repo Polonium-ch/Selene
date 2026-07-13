@@ -203,7 +203,7 @@ io_service_t findGipInterfaceChild(io_service_t deviceService)
     }
 
     _device = [device retain];
-    _queue = dispatch_queue_create("com.moonlight-stream.gipbridge.usb", DISPATCH_QUEUE_SERIAL);
+    _queue = dispatch_queue_create("ch.useselene.selene.gipbridge.usb", DISPATCH_QUEUE_SERIAL);
 
     __weak GipUsbDevice* weakSelf = self;
     NSError* error = nil;

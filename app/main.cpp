@@ -326,9 +326,9 @@ int main(int argc, char *argv[])
     // Set these here to allow us to use the default QSettings constructor.
     // These also ensure that our cache directory is named correctly. As such,
     // it is critical that these be called before Path::initialize().
-    QCoreApplication::setOrganizationName("Moonlight Game Streaming Project");
-    QCoreApplication::setOrganizationDomain("moonlight-stream.com");
-    QCoreApplication::setApplicationName("Moonlight");
+    QCoreApplication::setOrganizationName("Selene");
+    QCoreApplication::setOrganizationDomain("useselene.ch");
+    QCoreApplication::setApplicationName("Selene");
 
     if (QFile(QDir::currentPath() + "/portable.dat").exists()) {
         QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -352,7 +352,7 @@ int main(int argc, char *argv[])
     QDir tempDir(Path::getLogDir());
 
     {
-        s_LoggerFile = new QFile(tempDir.filePath(QString("Moonlight-%1.log").arg(QDateTime::currentSecsSinceEpoch())));
+        s_LoggerFile = new QFile(tempDir.filePath(QString("Selene-%1.log").arg(QDateTime::currentSecsSinceEpoch())));
         if (s_LoggerFile->open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream(stderr) << "Redirecting log output to " << s_LoggerFile->fileName() << Qt::endl;
             s_LoggerStream.setDevice(s_LoggerFile);
@@ -380,7 +380,7 @@ int main(int argc, char *argv[])
 
 #ifdef LOG_TO_FILE
     // Prune the oldest existing logs if there are more than 10
-    QStringList existingLogNames = tempDir.entryList(QStringList("Moonlight-*.log"), QDir::NoFilter, QDir::SortFlag::Time);
+    QStringList existingLogNames = tempDir.entryList(QStringList("Selene-*.log"), QDir::NoFilter, QDir::SortFlag::Time);
     for (int i = 10; i < existingLogNames.size(); i++) {
         qInfo() << "Removing old log file:" << existingLogNames.at(i);
         QFile(tempDir.filePath(existingLogNames.at(i))).remove();
@@ -403,7 +403,7 @@ int main(int argc, char *argv[])
     // password prompts on macOS.
     qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN", "1");
 
-    // Moonlight requires the non-threaded renderer because we depend
+    // Selene requires the non-threaded renderer because we depend
     // on being able to control the render thread by blocking in the
     // main thread (and pumping events from the main thread when needed).
     // That doesn't work with the threaded renderer which causes all
@@ -448,7 +448,7 @@ int main(int argc, char *argv[])
     atexit(SDL_Quit);
 
     // Avoid the default behavior of changing the timer resolution to 1 ms.
-    // We don't want this all the time that Moonlight is open. We will set
+    // We don't want this all the time that Selene is open. We will set
     // it manually when we start streaming.
     SDL_SetHint(SDL_HINT_TIMER_RESOLUTION, "0");
 
@@ -457,7 +457,7 @@ int main(int argc, char *argv[])
 
     // SDL 2.0.12 changes the default behavior to use the button label rather than the button
     // position as most other software does. Set this back to 0 to stay consistent with prior
-    // releases of Moonlight.
+    // releases of Selene.
     SDL_SetHint(SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS, "0");
 
     // Disable relative mouse scaling to renderer size or logical DPI. We want to send
@@ -467,8 +467,8 @@ int main(int argc, char *argv[])
     // Set our app name for SDL to use with PulseAudio and PipeWire. This matches what we
     // provide as our app name to libsoundio too. On SDL 2.0.18+, SDL_APP_NAME is also used
     // for screensaver inhibitor reporting.
-    SDL_SetHint(SDL_HINT_AUDIO_DEVICE_APP_NAME, "Moonlight");
-    SDL_SetHint(SDL_HINT_APP_NAME, "Moonlight");
+    SDL_SetHint(SDL_HINT_AUDIO_DEVICE_APP_NAME, "Selene");
+    SDL_SetHint(SDL_HINT_APP_NAME, "Selene");
 
     // We handle capturing the mouse ourselves when it leaves the window, so we don't need
     // SDL doing it for us behind our backs.
@@ -542,7 +542,7 @@ int main(int argc, char *argv[])
     QCoreApplication::translate("QPlatformTheme", "Help");
     QCoreApplication::translate("QPlatformTheme", "Cancel");
 
-    app.setDesktopFileName("com.moonlight_stream.Moonlight");
+    app.setDesktopFileName("ch.useselene.selene");
 
     // Register our C++ types for QML
     qmlRegisterType<ComputerModel>("ComputerModel", 1, 0, "ComputerModel");

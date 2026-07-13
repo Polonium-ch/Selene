@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>Selene</string>
+	<key>CFBundleIdentifier</key>
+	<string>ch.useselene.selene</string>
+	<key>CFBundleDisplayName</key>
+	<string>Selene</string>
+	<key>CFBundleName</key>
+	<string>Selene</string>
+	<key>CFBundleIconName</key>
+	<string>selene</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.games</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Selene uses the local network to discover your Sunshine/GameStream PC.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_nvstream._tcp.</string>
+	</array>
+</dict>
+</plist>

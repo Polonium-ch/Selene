@@ -15,7 +15,7 @@ constexpr int kNumButtons = SDL_CONTROLLER_BUTTON_DPAD_RIGHT + 1;
 
 // gip reports triggers as 0..1023; SDL_JoystickSetVirtualAxis() expects the
 // full Sint16 range, with SdlInputHandler::handleControllerAxisEvent()
-// later rescaling from 0..32767 down to the 0..255 range Moonlight sends
+// later rescaling from 0..32767 down to the 0..255 range Selene sends
 // over the wire.
 Sint16 scaleTrigger(uint16_t rawValue)
 {
@@ -31,7 +31,7 @@ NSData* toNSData(const std::vector<uint8_t>& bytes)
 
 GipBridgeController::GipBridgeController()
     : m_UsbDevice(nil)
-    , m_ScanQueue(dispatch_queue_create("com.moonlight-stream.gipbridge.scan", DISPATCH_QUEUE_SERIAL))
+    , m_ScanQueue(dispatch_queue_create("ch.useselene.selene.gipbridge.scan", DISPATCH_QUEUE_SERIAL))
     , m_ScanTimer(nullptr)
     , m_JoystickDeviceIndex(-1)
     , m_Joystick(nullptr)

@@ -57,7 +57,7 @@ SdlInputHandler::SdlInputHandler(StreamingPreferences& prefs, int streamWidth, i
 
     // Allow clicks to pass through to us when focusing the window. If we're in
     // absolute mouse mode, this will avoid the user having to click twice to
-    // trigger a click on the host if the Moonlight window is not focused. In
+    // trigger a click on the host if the Selene window is not focused. In
     // relative mode, the click event will trigger the mouse to be recaptured.
     SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1");
 
@@ -231,7 +231,7 @@ SdlInputHandler::~SdlInputHandler()
 
 #ifdef Q_OS_DARWIN
     // Only detach our virtual joystick after every SDL_GameController handle
-    // pointing at it (including the one Moonlight itself opened above) is
+    // pointing at it (including the one Selene itself opened above) is
     // closed. Detaching first leaves those handles dangling and crashes the
     // subsystem teardown below.
     delete m_GipBridge;
