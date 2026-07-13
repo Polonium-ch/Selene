@@ -2,14 +2,10 @@ import SwiftUI
 
 /// A device tile for the grid layout, inspired by Windows App's device
 /// cards: a large gradient tile with the device name and resolved IP
-/// overlaid at the bottom, a hover-revealed favorite toggle, and a
-/// Mac-style click-to-select ring.
+/// overlaid at the bottom, and a Mac-style click-to-select ring.
 struct DeviceCardView: View {
     let host: DiscoveredHost
-    @Binding var isFavorite: Bool
     var isSelected: Bool
-
-    @State private var isHovering = false
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -23,6 +19,12 @@ struct DeviceCardView: View {
                     .offset(x: proxy.size.width * 0.4, y: -proxy.size.height * 0.35)
                     .blur(radius: 24)
             }
+
+            Image(systemName: "desktopcomputer")
+                .font(.system(size: 72, weight: .regular))
+                .foregroundStyle(.white.opacity(0.22))
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .offset(y: -8)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(host.name)
@@ -38,7 +40,7 @@ struct DeviceCardView: View {
             }
             .padding(14)
         }
-        .frame(height: 190)
+        .frame(width: 360, height: 220)
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay {
             if isSelected {
@@ -46,27 +48,22 @@ struct DeviceCardView: View {
                     .strokeBorder(Color.accentColor, lineWidth: 3)
             }
         }
-        .overlay(alignment: .topTrailing) {
-            if isHovering || isFavorite {
-                Button {
-                    isFavorite.toggle()
-                } label: {
-                    Image(systemName: isFavorite ? "star.fill" : "star")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(isFavorite ? .yellow : .white)
-                        .padding(6)
-                        .background(.black.opacity(0.25), in: Circle())
-                }
-                .buttonStyle(.plain)
-                .padding(10)
-                .transition(.opacity)
+        .overlay(alignment: .topLeading) {
+            if isPaired {
+                Label("Paired", systemImage: "checkmark.circle.fill")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(.black.opacity(0.25), in: Capsule())
+                    .padding(10)
             }
         }
-        .onHover { hovering in
-            withAnimation(.easeInOut(duration: 0.15)) {
-                isHovering = hovering
-            }
-        }
+    }
+
+    private var isPaired: Bool {
+        guard let serverUniqueId = host.serverUniqueId else { return false }
+        return PairingStore.isPaired(serverUniqueId: serverUniqueId)
     }
 
     /// A curated, stable-per-host color (not a rainbow hash) - the same

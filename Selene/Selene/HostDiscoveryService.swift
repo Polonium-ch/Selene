@@ -1,5 +1,8 @@
 import Foundation
 import Network
+import os
+
+private let discoveryLogger = Logger(subsystem: "ch.useselene.selene", category: "discovery")
 
 /// An update yielded by `HostDiscoveryService.updates()`.
 enum DiscoveryUpdate: Sendable {
@@ -58,12 +61,14 @@ final class HostDiscoveryService {
         }
 
         browser.browseResultsChangedHandler = { [weak self] results, _ in
+            discoveryLogger.notice("browseResultsChanged: \(results.count, privacy: .public) result(s)")
             Task { @MainActor in
                 await self?.reconcile(results: results)
             }
         }
 
         browser.start(queue: .global(qos: .userInitiated))
+        discoveryLogger.notice("browser.start() called")
         self.browser = browser
     }
 
@@ -77,11 +82,15 @@ final class HostDiscoveryService {
             for result in results where resolved[result.endpoint] == nil {
                 group.addTask { [weak self] in
                     guard let self, case let .service(name, _, _, _) = result.endpoint else {
+                        discoveryLogger.notice("skip: endpoint isn't .service")
                         return nil
                     }
+                    discoveryLogger.notice("resolving endpoint for \(name, privacy: .public)")
                     guard let (host, port) = await self.resolve(endpoint: result.endpoint) else {
+                        discoveryLogger.notice("resolve FAILED for \(name, privacy: .public)")
                         return nil
                     }
+                    discoveryLogger.notice("resolved \(name, privacy: .public) -> \(host, privacy: .public):\(port, privacy: .public)")
 
                     var txt: [String: String] = [:]
                     if case let .bonjour(record) = result.metadata {
@@ -92,15 +101,18 @@ final class HostDiscoveryService {
                     // Name" - fetch the real one from /serverinfo, same as the
                     // legacy Qt client does. Falls back to the Bonjour name if the
                     // host doesn't respond (offline, firewalled, etc).
-                    let displayName = await SunshineServerInfo.fetchHostname(ip: host, port: port) ?? name
+                    let serverInfo = await SunshineServerInfoFetcher.fetch(ip: host, port: port)
+                    discoveryLogger.notice("serverinfo for \(name, privacy: .public): hostname=\(serverInfo?.hostname ?? "nil", privacy: .public) uniqueId=\(serverInfo?.uniqueId ?? "nil", privacy: .public)")
 
                     let discovered = DiscoveredHost(
                         id: name,
-                        name: displayName,
+                        name: serverInfo?.hostname ?? name,
                         resolvedHost: host,
                         port: port,
                         txtRecord: txt,
-                        lastUpdated: Date()
+                        lastUpdated: Date(),
+                        serverUniqueId: serverInfo?.uniqueId,
+                        appVersion: serverInfo?.appVersion
                     )
                     return (result.endpoint, discovered)
                 }
@@ -112,6 +124,7 @@ final class HostDiscoveryService {
             }
         }
 
+        discoveryLogger.notice("yielding \(self.resolved.count, privacy: .public) host(s)")
         continuation?.yield(.hosts(resolved.values.sorted { $0.name < $1.name }))
     }
 

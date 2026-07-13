@@ -23,10 +23,13 @@ struct ContentView: View {
     @State private var selection: SidebarSection? = .devices
     @State private var searchText = ""
     @State private var layout: DevicesLayout = .grid
-    @State private var favoriteIDs: Set<String> = []
     @State private var selectedHostID: DiscoveredHost.ID?
     @State private var viewModel = HostListViewModel()
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @State private var activeHost: DiscoveredHost?
+    @State private var isAddingHost = false
+
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -46,14 +49,33 @@ struct ContentView: View {
             // with the sidebar's own edge instead.
             .toolbar(removing: .sidebarToggle)
         } detail: {
-            DevicesView(
-                viewModel: viewModel,
-                layout: layout,
-                searchText: searchText,
-                favoriteIDs: $favoriteIDs,
-                selectedHostID: $selectedHostID,
-                onlyFavorites: false
-            )
+            // A picked app opens its own (eventually fullscreen) window, but
+            // the app grid itself replaces this same window's content -
+            // matching the legacy Qt client's in-place navigation instead of
+            // spawning a whole new OS window just to browse apps.
+            if let activeHost {
+                AppGridView(host: activeHost) { app in
+                    openWindow(value: StreamTarget(host: activeHost, app: app))
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigation) {
+                        Button {
+                            self.activeHost = nil
+                        } label: {
+                            Image(systemName: "chevron.left")
+                        }
+                        .help("Back to Devices")
+                    }
+                }
+            } else {
+                DevicesView(
+                    viewModel: viewModel,
+                    layout: layout,
+                    searchText: searchText,
+                    selectedHostID: $selectedHostID,
+                    onOpenAppGrid: { activeHost = $0 }
+                )
+            }
         }
         .toolbar {
             ToolbarItem(placement: .navigation) {
@@ -67,27 +89,43 @@ struct ContentView: View {
                 .help("Toggle Sidebar")
             }
 
-            ToolbarItem(placement: .primaryAction) {
-                Picker("Layout", selection: $layout) {
-                    Image(systemName: "square.grid.2x2").tag(DevicesLayout.grid)
-                    Image(systemName: "list.bullet").tag(DevicesLayout.list)
+            if activeHost == nil {
+                ToolbarItem(placement: .primaryAction) {
+                    Picker("Layout", selection: $layout) {
+                        Image(systemName: "square.grid.2x2").tag(DevicesLayout.grid)
+                        Image(systemName: "list.bullet").tag(DevicesLayout.list)
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 84)
+                    .help("Change how devices are displayed")
                 }
-                .pickerStyle(.segmented)
-                .frame(width: 84)
-                .help("Change how devices are displayed")
-            }
 
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    viewModel.stop()
-                    viewModel.start()
-                } label: {
-                    Image(systemName: "arrow.clockwise")
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        viewModel.stop()
+                        viewModel.start()
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    .help("Search again for devices")
                 }
-                .help("Search again for devices")
+
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        isAddingHost = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .help("Add PC by Address")
+                }
             }
         }
         .frame(minWidth: 760, minHeight: 480)
+        .sheet(isPresented: $isAddingHost) {
+            AddHostSheetView { host in
+                viewModel.addManualHost(host)
+            }
+        }
     }
 
     private func badgeCount(for section: SidebarSection) -> Int {

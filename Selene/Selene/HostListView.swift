@@ -8,17 +8,13 @@ struct DevicesView: View {
     var viewModel: HostListViewModel
     var layout: DevicesLayout
     var searchText: String
-    @Binding var favoriteIDs: Set<String>
     @Binding var selectedHostID: DiscoveredHost.ID?
-    var onlyFavorites: Bool
+    var onOpenAppGrid: (DiscoveredHost) -> Void
 
-    @Environment(\.openWindow) private var openWindow
+    @State private var pairingHost: DiscoveredHost?
 
     private var filteredHosts: [DiscoveredHost] {
-        var hosts = viewModel.hosts
-        if onlyFavorites {
-            hosts = hosts.filter { favoriteIDs.contains($0.id) }
-        }
+        let hosts = viewModel.hosts
         guard !searchText.isEmpty else { return hosts }
         return hosts.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
     }
@@ -44,22 +40,23 @@ struct DevicesView: View {
         .task {
             viewModel.start()
         }
+        .sheet(item: $pairingHost) { host in
+            PairingSheetView(host: host) { succeeded in
+                if succeeded {
+                    onOpenAppGrid(host)
+                }
+            }
+        }
     }
 
     private var sectionHeader: some View {
-        Text(onlyFavorites ? "Favorite Devices" : "Devices")
+        Text("Devices")
             .font(.title2.weight(.semibold))
     }
 
     private var emptyState: some View {
         Group {
-            if onlyFavorites {
-                ContentUnavailableView {
-                    Label("No Favorites Yet", systemImage: "star")
-                } description: {
-                    Text("Star a device to add it here.")
-                }
-            } else if case .failed(let message) = viewModel.state {
+            if case .failed(let message) = viewModel.state {
                 ContentUnavailableView {
                     Label("Discovery Failed", systemImage: "exclamationmark.triangle")
                 } description: {
@@ -76,11 +73,10 @@ struct DevicesView: View {
     }
 
     private var grid: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 260, maximum: 340), spacing: 24)], spacing: 28) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 360, maximum: 360), spacing: 24)], alignment: .leading, spacing: 28) {
             ForEach(filteredHosts) { host in
                 DeviceCardView(
                     host: host,
-                    isFavorite: favoriteBinding(for: host),
                     isSelected: selectedHostID == host.id
                 )
                 .contentShape(Rectangle())
@@ -92,6 +88,7 @@ struct DevicesView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var list: some View {
@@ -118,15 +115,6 @@ struct DevicesView: View {
                     }
 
                     Spacer()
-
-                    let isFavorite = favoriteBinding(for: host)
-                    Button {
-                        isFavorite.wrappedValue.toggle()
-                    } label: {
-                        Image(systemName: isFavorite.wrappedValue ? "star.fill" : "star")
-                            .foregroundStyle(isFavorite.wrappedValue ? .yellow : .secondary)
-                    }
-                    .buttonStyle(.plain)
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
@@ -147,20 +135,15 @@ struct DevicesView: View {
 
     private func startStream(with host: DiscoveredHost) {
         selectedHostID = host.id
-        openWindow(value: host)
-    }
 
-    private func favoriteBinding(for host: DiscoveredHost) -> Binding<Bool> {
-        Binding(
-            get: { favoriteIDs.contains(host.id) },
-            set: { isFavorite in
-                if isFavorite {
-                    favoriteIDs.insert(host.id)
-                } else {
-                    favoriteIDs.remove(host.id)
-                }
-            }
-        )
+        // Paired hosts land on the app grid (Desktop/Steam Big Picture/etc,
+        // with box art from /applist + /appasset) in the same window;
+        // unpaired ones go through the PIN dialog first.
+        if let serverUniqueId = host.serverUniqueId, PairingStore.isPaired(serverUniqueId: serverUniqueId) {
+            onOpenAppGrid(host)
+        } else {
+            pairingHost = host
+        }
     }
 }
 
@@ -169,8 +152,7 @@ struct DevicesView: View {
         viewModel: HostListViewModel(),
         layout: .grid,
         searchText: "",
-        favoriteIDs: .constant([]),
         selectedHostID: .constant(nil),
-        onlyFavorites: false
+        onOpenAppGrid: { _ in }
     )
 }
