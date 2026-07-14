@@ -6,4 +6,5 @@ import Foundation
 struct StreamTarget: Codable, Hashable {
     let host: DiscoveredHost
     let app: GameStreamApp
+    var resuming: Bool = false
 }

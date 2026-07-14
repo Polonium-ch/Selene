@@ -2,7 +2,7 @@ import Foundation
 import Network
 import os
 
-private let discoveryLogger = Logger(subsystem: "ch.useselene.selene", category: "discovery")
+private let discoveryLogger = Logger(subsystem: "ch.polonium.selene", category: "discovery")
 
 /// An update yielded by `HostDiscoveryService.updates()`.
 enum DiscoveryUpdate: Sendable {

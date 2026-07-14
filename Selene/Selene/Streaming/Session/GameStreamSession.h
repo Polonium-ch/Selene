@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "VideoDecodeRenderer.h"
+#import "AudioDecodeRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,7 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GameStreamSession : NSObject
 
 - (instancetype)initWithDelegate:(id<GameStreamSessionDelegate>)delegate
-                    videoRenderer:(VideoDecodeRenderer *)videoRenderer;
+                    videoRenderer:(VideoDecodeRenderer *)videoRenderer
+                    audioRenderer:(AudioDecodeRenderer *)audioRenderer;
 
 - (void)startWithAddress:(NSString *)address
          serverAppVersion:(NSString *)serverAppVersion

@@ -1,59 +1,228 @@
-# Selene
+<h1 align="center">🌙 Selene</h1>
 
-Selene is a native macOS client for [Sunshine](https://github.com/LizardByte/Sunshine) and NVIDIA GameStream game streaming, built on the [Moonlight](https://moonlight-stream.org) protocol stack.
+<p align="center">
+  A native macOS client for Sunshine & NVIDIA GameStream.
+  <br>
+  Built with SwiftUI and Apple's native frameworks.
+</p>
 
-It started as an independent fork of [moonlight-qt](https://github.com/moonlight-stream/moonlight-qt), stripped down to a macOS-only build. Selene doesn't track moonlight-qt's releases or follow its roadmap — it has its own pace and its own decisions, pulling in upstream changes only when they're worth it.
+<p align="center">
+  <a href="#-features">Features</a> ·
+  <a href="#-status">Status</a> ·
+  <a href="#-architecture">Architecture</a> ·
+  <a href="#-building">Building</a> ·
+  <a href="#-license">License</a>
+</p>
 
-**Apple Silicon only.** This is a fully conscious decision, not an oversight, and it isn't going to change. Apple itself has been winding Intel Mac support down for years, so investing effort into supporting a platform on its way out doesn't make sense for a project starting fresh today. On top of that, there's no Intel Mac available to test against here, so any Intel compatibility claim would be untested and unreliable anyway. Intel support requests will be declined.
+<p align="center">
+  <img alt="platform" src="https://img.shields.io/badge/platform-Apple%20Silicon-174d77?style=for-the-badge&logo=apple&logoColor=white&labelColor=1a1b26" />
+  <img alt="swift" src="https://img.shields.io/badge/Swift-6-174d77?style=for-the-badge&logo=swift&logoColor=white&labelColor=1a1b26" />
+  <img alt="status" src="https://img.shields.io/badge/status-active%20development-174d77?style=for-the-badge&labelColor=1a1b26" />
+  <a href="LICENSE">
+    <img alt="license" src="https://img.shields.io/github/license/viincnt/Selene?style=for-the-badge&colorA=1a1b26&colorB=174d77" />
+  </a>
+</p>
 
-## Status
+---
 
-Selene is early and actively changing. Today it still runs the streaming engine largely as inherited from moonlight-qt (Qt/QML UI, FFmpeg decode pipeline, VideoToolbox/Metal rendering, the custom GIP controller bridge for Xbox-licensed USB pads). Two things are in progress:
+Selene is a native macOS client for Sunshine and NVIDIA GameStream built on the Moonlight protocol.
 
-- Replacing the Qt/QML interface with a genuinely native macOS UI.
-- Migrating the underlying engine to Rust, piece by piece, keeping the existing C/C++/Objective-C++ code running underneath until each piece is ported.
+Originally forked from `moonlight-qt`, the project has since evolved into a complete native rewrite focused exclusively on macOS. While the original protocol implementation is still reused where it makes sense, the application itself follows its own roadmap and architecture.
 
-Nothing here is stable yet. Expect things to move around.
+> **Apple Silicon only.**
+>
+> This is a deliberate design decision. Apple has been deprecating Intel Macs for years, and supporting a platform that is already approaching end-of-life doesn't make sense for a brand-new project. Additionally, there is no Intel hardware available for testing, so any compatibility claim would be unreliable.
 
-## Features (inherited from the current engine)
+---
 
-- Hardware-accelerated video decoding via VideoToolbox and Vulkan (MoltenVK)
-- H.264, HEVC, and AV1 codec support (AV1 requires Sunshine and a supported host GPU)
-- YUV 4:4:4 and HDR streaming support (Sunshine only)
-- 7.1 surround sound audio
-- Gamepad support with force feedback and motion controls, including direct USB support for GIP-protocol (Xbox One/Series-licensed) controllers that macOS has no native driver for
-- Support for both pointer capture (for games) and direct mouse control (for remote desktop)
+# ✨ Features
 
-## Building
+- ✅ Native SwiftUI + AppKit interface
+- ✅ Bonjour host discovery
+- ✅ Manual host discovery over VPN or WAN
+- ✅ NVIDIA GameStream PIN pairing
+- ✅ Hardware H.264 decoding (VideoToolbox)
+- ✅ Native Opus decoding (AudioToolbox)
+- ✅ Keyboard & mouse forwarding
+- ✅ Session background / resume support
+- ✅ Real Sunshine compatibility
 
-macOS on Apple Silicon (arm64) only. Intel Macs are not supported and are not a build target.
+---
 
-### Requirements
-- An Apple Silicon Mac
-- Qt 6.7 SDK or later
-- Xcode 14 or later
-- [create-dmg](https://github.com/sindresorhus/create-dmg) (only if building a DMG for distribution)
+# 🚀 Status
 
-### Setup
-1. Install the Qt SDK from https://www.qt.io/download (or via Homebrew: `brew install qt`).
-2. Fetch submodules and prebuilt dependencies:
-   ```
-   git submodule update --init --recursive
-   python3 setup-deps.py
-   ```
-   Repeat this step whenever you pull new changes.
-3. Build:
-   ```
-   qmake6 moonlight-qt.pro
-   make release
-   ```
-   The built app bundle will be under `build/app/` (or `app/` if building in-place without a separate build directory).
-4. To build a distributable DMG, run `scripts/generate-dmg.sh Release` from the repository root with Qt's `bin` folder in your `$PATH`.
+Selene is currently undergoing a complete ground-up rewrite.
 
-## License
+| Component | Status                                       |
+| --------- | -------------------------------------------- |
+| `Selene/` | 🟢 Native Swift client (active development)  |
+| `app/`    | ⚪ Legacy Qt implementation (reference only) |
 
-Selene is licensed under the [GNU General Public License v3.0](LICENSE), the same license as Moonlight.
+The native client already supports complete end-to-end streaming against real Sunshine hosts, including video, audio, input, pairing and session management.
 
-## Acknowledgments
+---
 
-Selene builds on the protocol and streaming work of the [Moonlight](https://github.com/moonlight-stream) and [Sunshine](https://github.com/LizardByte/Sunshine) projects. Thanks to both communities for the groundwork.
+# 🏗 Architecture
+
+```mermaid
+flowchart TD
+
+UI[SwiftUI / AppKit]
+
+VM[View Models]
+
+Bridge[Objective-C++ Bridges]
+
+ML[moonlight-common-c]
+
+VT[VideoToolbox]
+
+AT[AudioToolbox]
+
+SEC[Security.framework]
+
+SSL[OpenSSL]
+
+UI --> VM
+
+VM --> Bridge
+
+Bridge --> ML
+
+Bridge --> VT
+
+Bridge --> AT
+
+Bridge --> SEC
+
+Bridge --> SSL
+```
+
+### Stack
+
+| Layer     | Technology         |
+| --------- | ------------------ |
+| UI        | SwiftUI + AppKit   |
+| Streaming | moonlight-common-c |
+| Video     | VideoToolbox       |
+| Audio     | AudioToolbox       |
+| TLS       | Security.framework |
+| Crypto    | OpenSSL            |
+| Build     | Xcode              |
+
+<details>
+
+<summary><strong>Architecture details</strong></summary>
+
+The native client intentionally relies on Apple's own frameworks wherever practical instead of introducing third-party dependencies.
+
+Current implementation includes:
+
+- SwiftUI for the complete application interface.
+- `moonlight-common-c` for the GameStream protocol implementation.
+- Objective-C++ bridges between Swift and the Moonlight engine.
+- VideoToolbox with `AVSampleBufferDisplayLayer` for hardware H.264 decoding.
+- AudioToolbox (`AudioConverter`) for native Opus decoding.
+- Security.framework for Keychain-backed TLS identities.
+- OpenSSL for Moonlight-compatible RSA identity generation.
+
+Long-term, networking and cryptographic orchestration are planned to migrate to Rust while preserving the existing Swift UI and Moonlight protocol engine.
+
+</details>
+
+---
+
+# ✅ Current Progress
+
+### Streaming
+
+- ✅ Sunshine pairing
+- ✅ App list browsing
+- ✅ Box art loading
+- ✅ Video streaming
+- ✅ Audio streaming
+- ✅ Keyboard input
+- ✅ Mouse input
+- ✅ Background / Resume
+
+### Networking
+
+- ✅ Bonjour discovery
+- ✅ Manual host connection
+- ✅ LAN
+- ✅ VPN
+
+---
+
+# 🚧 Roadmap
+
+- [ ] Gamepad support
+- [ ] HEVC decoding
+- [ ] AV1 decoding
+- [ ] Surround audio
+- [ ] Codec capability negotiation
+- [ ] Preferences window
+- [ ] Streaming settings
+- [ ] Performance metrics
+
+---
+
+# 🛠 Building
+
+## Native Client
+
+Requirements:
+
+- Apple Silicon Mac
+- Xcode
+- OpenSSL (`brew install openssl@3`)
+
+```bash
+cd Selene
+
+xcodebuild \
+    -project Selene.xcodeproj \
+    -scheme Selene \
+    -configuration Debug \
+    build
+```
+
+---
+
+<details>
+
+<summary><strong>Legacy Qt client (reference only)</strong></summary>
+
+The original Qt implementation is preserved exclusively as a reference while the native client reaches feature parity.
+
+Requirements:
+
+- Qt 6.7+
+- Apple Silicon Mac
+- Xcode
+
+```bash
+git submodule update --init --recursive
+
+python3 setup-deps.py
+
+qmake6 moonlight-qt.pro
+
+make release
+```
+
+</details>
+
+---
+
+# 📄 License
+
+Selene is licensed under the GNU GPL v3, the same license used by Moonlight.
+
+---
+
+# 🙏 Acknowledgements
+
+Selene would not exist without the incredible work behind the Moonlight and Sunshine projects.
+
+Huge thanks to both communities for building and maintaining the protocol and streaming ecosystem this project is based on.

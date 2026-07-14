@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Selene</string>
 	<key>CFBundleIdentifier</key>
-	<string>ch.useselene.selene</string>
+	<string>ch.polonium.selene</string>
 	<key>CFBundleDisplayName</key>
 	<string>Selene</string>
 	<key>CFBundleName</key>

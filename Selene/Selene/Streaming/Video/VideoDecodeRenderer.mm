@@ -5,7 +5,7 @@ static os_log_t videoLog(void) {
     static os_log_t log;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        log = os_log_create("ch.useselene.selene", "video");
+        log = os_log_create("ch.polonium.selene", "video");
     });
     return log;
 }

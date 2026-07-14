@@ -11,6 +11,10 @@ struct SunshineServerInfo: Sendable {
     var appVersion: String?
     var uniqueId: String?
     var httpsPort: UInt16?
+    /// The app ID currently running on the host, or nil if nothing is -
+    /// mirrors the legacy Qt client's `NvHTTP::getCurrentGame()`, which
+    /// drives whether an app tile shows "Resume"/"Quit" instead of "Launch".
+    var currentGameAppId: Int?
 }
 
 /// Fetches `/serverinfo` over its unauthenticated plain-HTTP endpoint.
@@ -55,7 +59,10 @@ enum SunshineServerInfoFetcher {
             hostname: nonEmpty(parser.fields["hostname"]),
             appVersion: nonEmpty(parser.fields["appversion"]),
             uniqueId: nonEmpty(parser.fields["uniqueid"]),
-            httpsPort: parser.fields["HttpsPort"].flatMap { UInt16($0) }
+            httpsPort: parser.fields["HttpsPort"].flatMap { UInt16($0) },
+            // 0 means "nothing running" (GFE/Sunshine convention - see
+            // NvHTTP::getCurrentGame()), so normalize that to nil.
+            currentGameAppId: parser.fields["currentgame"].flatMap { Int($0) }.flatMap { $0 == 0 ? nil : $0 }
         )
     }
 
@@ -69,7 +76,7 @@ enum SunshineServerInfoFetcher {
 
 private final class ServerInfoXMLParser: NSObject, XMLParserDelegate {
     private(set) var fields: [String: String] = [:]
-    private static let trackedElements: Set<String> = ["hostname", "appversion", "uniqueid", "HttpsPort"]
+    private static let trackedElements: Set<String> = ["hostname", "appversion", "uniqueid", "HttpsPort", "currentgame"]
     private var currentElement: String?
     private var buffer = ""
 

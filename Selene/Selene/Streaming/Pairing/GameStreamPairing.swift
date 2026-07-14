@@ -1,7 +1,7 @@
 import Foundation
 import os
 
-private let pairingLogger = Logger(subsystem: "ch.useselene.selene", category: "pairing")
+private let pairingLogger = Logger(subsystem: "ch.polonium.selene", category: "pairing")
 
 /// Result of a pairing attempt - mirrors `NvPairingManager::PairState` in the
 /// legacy Qt client (`app/backend/nvpairingmanager.cpp`).

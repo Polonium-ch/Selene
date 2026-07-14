@@ -1,7 +1,7 @@
 import Foundation
 import os
 
-private let clientLogger = Logger(subsystem: "ch.useselene.selene", category: "client")
+private let clientLogger = Logger(subsystem: "ch.polonium.selene", category: "client")
 
 /// An app/game configured on a Sunshine host (Desktop, Steam Big Picture, a
 /// specific game, etc).

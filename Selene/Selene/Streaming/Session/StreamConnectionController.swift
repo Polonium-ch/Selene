@@ -1,23 +1,41 @@
+import AppKit
 import Foundation
 import os
 
-private let sessionLogger = Logger(subsystem: "ch.useselene.selene", category: "session")
+private let sessionLogger = Logger(subsystem: "ch.polonium.selene", category: "session")
 
 /// Drives one `GameStreamSession` (the `LiStartConnection` bridge) and
 /// surfaces its stage progress for the UI. Also owns the `VideoDecodeRenderer`
-/// so its `AVSampleBufferDisplayLayer` can be hosted in SwiftUI once
-/// connected. No audio/input is wired up yet.
+/// (its `AVSampleBufferDisplayLayer` gets hosted in SwiftUI once connected)
+/// and the `AudioDecodeRenderer`. No input is wired up yet.
 @MainActor
 @Observable
 final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
-    private(set) var log: [String] = []
     private(set) var isConnected = false
 
     let videoRenderer = VideoDecodeRenderer()
+    private let audioRenderer = AudioDecodeRenderer()
+    private let inputForwarder = InputForwarder()
     private var session: GameStreamSession?
 
+    /// Fired when the user presses the background hotkey (Ctrl+Option+Shift+Q)
+    /// during a stream - see `InputForwarder`.
+    var onBackgroundRequested: (() -> Void)? {
+        get { inputForwarder.onBackgroundRequested }
+        set { inputForwarder.onBackgroundRequested = newValue }
+    }
+
+    /// The stream's own NSWindow - gates input capture to only fire while
+    /// this specific window is key (see `InputForwarder`). Set this as soon
+    /// as the window is known, so it's already recorded by the time
+    /// `inputForwarder.start()` runs after the connection comes up.
+    var streamWindow: NSWindow? {
+        get { inputForwarder.targetWindow }
+        set { inputForwarder.targetWindow = newValue }
+    }
+
     func start(address: String, serverAppVersion: String, rtspSessionUrl: String?, config: StreamSessionConfig) {
-        let session = GameStreamSession(delegate: self, videoRenderer: videoRenderer)
+        let session = GameStreamSession(delegate: self, videoRenderer: videoRenderer, audioRenderer: audioRenderer)
         self.session = session
         session.start(
             withAddress: address,
@@ -35,6 +53,8 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
     func stop() {
         session?.stop()
         videoRenderer.reset()
+        audioRenderer.reset()
+        inputForwarder.stop()
     }
 
     // These are invoked by GameStreamSession.mm via dispatch_async(dispatch_get_main_queue()),
@@ -43,30 +63,21 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
     // an extra Task (which would also reorder these relative to each other).
     nonisolated func gameStreamSessionStageStarting(_ stage: String) {
         sessionLogger.notice("stage starting: \(stage, privacy: .public)")
-        MainActor.assumeIsolated {
-            log.append("Starting: \(stage)")
-        }
     }
 
     nonisolated func gameStreamSessionStageComplete(_ stage: String) {
         sessionLogger.notice("stage complete: \(stage, privacy: .public)")
-        MainActor.assumeIsolated {
-            log.append("Complete: \(stage)")
-        }
     }
 
     nonisolated func gameStreamSessionStageFailed(_ stage: String, errorCode: Int32) {
         sessionLogger.error("stage FAILED: \(stage, privacy: .public) code=\(errorCode, privacy: .public)")
-        MainActor.assumeIsolated {
-            log.append("FAILED: \(stage) (code \(errorCode))")
-        }
     }
 
     nonisolated func gameStreamSessionConnectionStarted() {
         sessionLogger.notice("connection started")
         MainActor.assumeIsolated {
             isConnected = true
-            log.append("Connection started!")
+            inputForwarder.start()
         }
     }
 
@@ -74,7 +85,7 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
         sessionLogger.notice("connection terminated code=\(errorCode, privacy: .public)")
         MainActor.assumeIsolated {
             isConnected = false
-            log.append("Terminated (code \(errorCode))")
+            inputForwarder.stop()
         }
     }
 

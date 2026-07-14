@@ -9,17 +9,37 @@
 // per-process model (see GameStreamSession.h).
 static GameStreamSession *currentSession = nil;
 
+// LiStartConnection/LiStopConnection share process-global state in
+// moonlight-common-c, so a start() and a stop() (e.g. backgrounding a stream
+// and immediately resuming) must never run concurrently with each other.
+// dispatch_get_global_queue() is a CONCURRENT queue - two blocks dispatched
+// to it, even back to back, can run on different threads at the same time,
+// which let a fresh LiStartConnection race an in-flight LiStopConnection and
+// fail with no useful error. A dedicated serial queue guarantees stop()
+// fully finishes before the next start() begins.
+static dispatch_queue_t gameStreamSessionQueue(void) {
+    static dispatch_queue_t queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("ch.polonium.selene.gamestream-session", DISPATCH_QUEUE_SERIAL);
+    });
+    return queue;
+}
+
 @implementation GameStreamSession {
     __weak id<GameStreamSessionDelegate> _delegate;
     VideoDecodeRenderer *_videoRenderer;
+    AudioDecodeRenderer *_audioRenderer;
 }
 
 - (instancetype)initWithDelegate:(id<GameStreamSessionDelegate>)delegate
-                    videoRenderer:(VideoDecodeRenderer *)videoRenderer {
+                    videoRenderer:(VideoDecodeRenderer *)videoRenderer
+                    audioRenderer:(AudioDecodeRenderer *)audioRenderer {
     self = [super init];
     if (self) {
         _delegate = delegate;
         _videoRenderer = videoRenderer;
+        _audioRenderer = audioRenderer;
     }
     return self;
 }
@@ -104,16 +124,32 @@ static int drSubmitDecodeUnit(PDECODE_UNIT decodeUnit) {
     return [renderer submitDecodeUnit:decodeUnit];
 }
 
-#pragma mark - AUDIO_RENDERER_CALLBACKS (no-op stubs - no audio decode/playback yet)
+#pragma mark - AUDIO_RENDERER_CALLBACKS (routes to AudioDecodeRenderer)
 
 static int arInit(int audioConfiguration, const POPUS_MULTISTREAM_CONFIGURATION opusConfig, void *context, int arFlags) {
-    return 0;
+    AudioDecodeRenderer *renderer = currentSession ? currentSession->_audioRenderer : nil;
+    if (renderer == nil) {
+        return 0;
+    }
+    return [renderer setupWithOpusConfig:opusConfig];
 }
 
-static void arStart(void) {}
-static void arStop(void) {}
+static void arStart(void) {
+    AudioDecodeRenderer *renderer = currentSession ? currentSession->_audioRenderer : nil;
+    [renderer start];
+}
+
+static void arStop(void) {
+    AudioDecodeRenderer *renderer = currentSession ? currentSession->_audioRenderer : nil;
+    [renderer stop];
+}
+
 static void arCleanup(void) {}
-static void arDecodeAndPlaySample(char *sampleData, int sampleLength) {}
+
+static void arDecodeAndPlaySample(char *sampleData, int sampleLength) {
+    AudioDecodeRenderer *renderer = currentSession ? currentSession->_audioRenderer : nil;
+    [renderer decodeAndPlaySample:sampleData length:sampleLength];
+}
 
 #pragma mark - Public API
 
@@ -135,7 +171,7 @@ static void arDecodeAndPlaySample(char *sampleData, int sampleLength) {}
     NSData *aesKeyCopy = [remoteInputAesKey copy];
     NSData *aesIvCopy = [remoteInputAesIv copy];
 
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+    dispatch_async(gameStreamSessionQueue(), ^{
         const char *addressCStr = strdup(addressCopy.UTF8String);
         const char *appVersionCStr = strdup(serverAppVersionCopy.UTF8String);
         const char *rtspCStr = rtspSessionUrlCopy ? strdup(rtspSessionUrlCopy.UTF8String) : NULL;
@@ -206,7 +242,7 @@ static void arDecodeAndPlaySample(char *sampleData, int sampleLength) {}
 }
 
 - (void)stop {
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+    dispatch_async(gameStreamSessionQueue(), ^{
         LiStopConnection();
     });
 }
