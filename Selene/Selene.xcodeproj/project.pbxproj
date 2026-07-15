@@ -535,6 +535,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = selene;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = Selene/App/Selene.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -571,11 +572,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "/opt/homebrew/opt/openssl@3/lib";
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
-					"-lssl",
-					"-lcrypto",
+					"/opt/homebrew/opt/openssl@3/lib/libssl.a",
+					"/opt/homebrew/opt/openssl@3/lib/libcrypto.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ch.polonium.selene;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -655,6 +655,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = selene;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = Selene/App/Selene.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -691,11 +692,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "/opt/homebrew/opt/openssl@3/lib";
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
-					"-lssl",
-					"-lcrypto",
+					"/opt/homebrew/opt/openssl@3/lib/libssl.a",
+					"/opt/homebrew/opt/openssl@3/lib/libcrypto.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ch.polonium.selene;
 				PRODUCT_NAME = "$(TARGET_NAME)";

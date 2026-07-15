@@ -86,10 +86,32 @@ if [ ! -x "$SIGN_UPDATE" ]; then
 fi
 
 # --- 4. Sign the .dmg ---
-echo "==> Signing with Sparkle EdDSA key from Keychain"
+# Locally this reads the key from the login Keychain. In CI, set
+# SPARKLE_PRIVATE_KEY (the contents exported via `generate_keys -x`) instead.
+SIGN_ARGS=("$DMG_PATH")
+if [ -n "${SPARKLE_PRIVATE_KEY:-}" ]; then
+  echo "==> Signing with Sparkle EdDSA key from \$SPARKLE_PRIVATE_KEY"
+  SIGN_ARGS=(-s "$SPARKLE_PRIVATE_KEY" "$DMG_PATH")
+else
+  echo "==> Signing with Sparkle EdDSA key from Keychain"
+fi
 # sign_update prints a ready-to-paste `sparkle:edSignature="..." length="..."` string.
-SIGN_OUTPUT=$("$SIGN_UPDATE" "$DMG_PATH") || fail "sign_update failed - is the signing key in your login Keychain?"
+SIGN_OUTPUT=$("$SIGN_UPDATE" "${SIGN_ARGS[@]}") || fail "sign_update failed - is the signing key in your login Keychain (or SPARKLE_PRIVATE_KEY set)?"
 echo "$SIGN_OUTPUT"
+
+ED_SIGNATURE=$(echo "$SIGN_OUTPUT" | sed -n 's/.*edSignature="\([^"]*\)".*/\1/p')
+DMG_LENGTH=$(echo "$SIGN_OUTPUT" | sed -n 's/.*length="\([^"]*\)".*/\1/p')
+[ -n "$ED_SIGNATURE" ] && [ -n "$DMG_LENGTH" ] || fail "Could not parse edSignature/length from sign_update output"
+
+if [ -n "${GITHUB_OUTPUT:-}" ]; then
+  {
+    echo "short_version=$SHORT_VERSION"
+    echo "build_number=$BUILD_NUMBER"
+    echo "dmg_path=$DMG_PATH"
+    echo "ed_signature=$ED_SIGNATURE"
+    echo "dmg_length=$DMG_LENGTH"
+  } >> "$GITHUB_OUTPUT"
+fi
 
 echo
 echo "==> Done. Paste this into appcast.xml (fill in <title>/<pubDate> and the release download URL):"
