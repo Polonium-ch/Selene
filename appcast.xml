@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+  <channel>
+    <title>Selene Updates</title>
+    <link>https://raw.githubusercontent.com/Polonium-ch/Selene/main/appcast.xml</link>
+    <description>Update feed for Selene, the native macOS Sunshine/GameStream client.</description>
+    <language>en</language>
+    <!--
+            New releases go here as <item> entries, newest first. 
+            
+        -->
+    <item>
+      <title>Version 0.1.0</title>
+      <pubDate>Wed, 15 Jul 2026 16:33:22 +0000</pubDate>
+      <sparkle:version>1</sparkle:version>
+      <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <enclosure url="https://github.com/Polonium-ch/Selene/releases/download/v0.1.0/Selene-0.1.0.dmg" sparkle:edSignature="+5MBrFcI4t061IS+bsdhcUjQnQomgCR0aM0UXwOYcMpjlqYn6OSSAzP+mRzMsUyyV1o571odFzt15kdOTsvCAA==" length="3583777" type="application/octet-stream"/>
+    </item>
+  </channel>
+</rss>
