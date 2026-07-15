@@ -9,6 +9,7 @@
 <p align="center">
   <a href="#-features">Features</a> ·
   <a href="#-status">Status</a> ·
+  <a href="#-installation">Installation</a> ·
   <a href="#-architecture">Architecture</a> ·
   <a href="#-building">Building</a> ·
   <a href="#-license">License</a>
@@ -59,6 +60,30 @@ Selene is currently undergoing a complete ground-up rewrite.
 | `app/`    | ⚪ Legacy Qt implementation (reference only) |
 
 The native client already supports complete end-to-end streaming against real Sunshine hosts, including video, audio, input, pairing and session management.
+
+---
+
+# 📦 Installation
+
+Selene isn't notarized by Apple (no paid Developer ID behind this project yet), so macOS will flag it as coming from an unidentified developer. Both options below account for that.
+
+### Recommended: install script
+
+Open Terminal and run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Polonium-ch/Selene/main/install.sh | bash
+```
+
+This grabs the latest release, installs `Selene.app` to `/Applications`, and clears the quarantine flag so it opens normally on the first launch.
+
+### Manual
+
+- **Download the `.dmg`** from the [latest release](https://github.com/Polonium-ch/Selene/releases/latest), open it, drag `Selene.app` to `/Applications`, then clear the quarantine flag yourself:
+  ```bash
+  xattr -cr /Applications/Selene.app
+  ```
+- **Or build it from source** - see [Building](#-building) below.
 
 ---
 

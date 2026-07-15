@@ -13,3 +13,7 @@ config.tests/*/Makefile
 xcuserdata/
 DerivedData/
 *.xcuserstate
+
+## Sparkle release packaging (scripts/build-and-sign-dmg.sh)
+.sparkle-tools/
+*.dmg

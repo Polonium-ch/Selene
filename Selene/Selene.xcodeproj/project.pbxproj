@@ -19,6 +19,7 @@
 		1FD9D8CCB6FE5865BA9E5F9A /* src/RecorderCallbacks.c in Sources */ = {isa = PBXBuildFile; fileRef = B1DF1DC43A9631A89D5424EB /* src/RecorderCallbacks.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		20132197E3CC30EB9A8A836B /* VideoDecodeRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A138F56862A8BAF85370C1D /* VideoDecodeRenderer.mm */; };
 		2372F47CA56761DAD364A9C3 /* PairingSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F601CAABB107B91366E3EB /* PairingSheetView.swift */; };
+		247E40928B1FE3208BC96B63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3F4C969704F9873D7DB5A2 /* AppDelegate.swift */; };
 		2778B5560844FCB17F8C16D2 /* src/PlatformSockets.c in Sources */ = {isa = PBXBuildFile; fileRef = DFACF6D5FF168B54154CAAF0 /* src/PlatformSockets.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		2F5910FA8BA1B7FC91929B68 /* nanors/rs.c in Sources */ = {isa = PBXBuildFile; fileRef = C2959D0E161070272F9BE95A /* nanors/rs.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3736E402EAB6C57B7EB2B164 /* enet/peer.c in Sources */ = {isa = PBXBuildFile; fileRef = ED42608B92245AC656E3AF73 /* enet/peer.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -42,6 +43,7 @@
 		89DAFF90884D013A91444710 /* GameStreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13993F6AF01EA23C74906CC0 /* GameStreamClient.swift */; };
 		8AEEC67440CF4D9A561CBF4F /* PairingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA8AA61D136EFDF5CC3394 /* PairingStore.swift */; };
 		8CA849EA95C112B4CC41DB69 /* InputForwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B948AAB8A46F3382515FE9 /* InputForwarder.swift */; };
+		96094A89B362934175C7D5A1 /* CheckForUpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66544B3794C1CCACAC13247A /* CheckForUpdatesView.swift */; };
 		96F14CB69A2F4405BF74CCAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF267D53FB4F6F937AE0F9 /* ContentView.swift */; };
 		A1AA11F54B79450A899542AC /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6F8C5A6A3734BF894BD862A /* Network.framework */; };
 		A91FD0BD688E4540BE20373B /* HostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3118B0F02B0542F2810DA8F5 /* HostListViewModel.swift */; };
@@ -69,6 +71,7 @@
 		E9005FEFC3828DAB9D797E66 /* StreamConnectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1624FD4DFDE35AE4E920C0D9 /* StreamConnectionController.swift */; };
 		ED308717362FEF293544FCE9 /* src/Platform.c in Sources */ = {isa = PBXBuildFile; fileRef = B731BF90A6D8EDFAB5832731 /* src/Platform.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		ED8FC5A561734A7BB6C35EA9 /* AudioDecodeRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8817E9EECD047D0AF31EB83 /* AudioDecodeRenderer.mm */; };
+		F6CD4C02AE4A73D774D5CB2E /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 755E4B4D9B54A59AFC690236 /* Sparkle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +92,7 @@
 		16CD76C02FFC6B0D97138E9A /* src/Connection.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/Connection.c; sourceTree = "<group>"; };
 		195F4E21BAFBCEC1EE98609B /* KeyCodeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyCodeMap.swift; path = KeyCodeMap.swift; sourceTree = "<group>"; };
 		201E6EAE9696FF930DB22FD6 /* AppGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGridView.swift; sourceTree = "<group>"; };
+		2C3F4C969704F9873D7DB5A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30702E226494B2910D057543 /* VideoLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLayerView.swift; sourceTree = "<group>"; };
 		3118B0F02B0542F2810DA8F5 /* HostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostListViewModel.swift; sourceTree = "<group>"; };
 		39C042B0C06065B89C5F82AF /* ManualHostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualHostStore.swift; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 		5ABBACB6ACF13658D9ED2CFE /* src/Rtsp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = src/Rtsp.h; sourceTree = "<group>"; };
 		5E01230BDCA837901C2D815D /* src/Misc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/Misc.c; sourceTree = "<group>"; };
 		636659F4C7C4E424639304AD /* StreamTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamTarget.swift; sourceTree = "<group>"; };
+		66544B3794C1CCACAC13247A /* CheckForUpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckForUpdatesView.swift; path = CheckForUpdatesView.swift; sourceTree = "<group>"; };
 		692314ABC98681F461920FDA /* SunshineServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunshineServerInfo.swift; sourceTree = "<group>"; };
 		69AF89FD330C124E79AF8B83 /* src/InputStream.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/InputStream.c; sourceTree = "<group>"; };
 		6B8FE3D291E7CA8C818F8BA0 /* AddHostSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHostSheetView.swift; sourceTree = "<group>"; };
@@ -162,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1AA11F54B79450A899542AC /* Network.framework in Frameworks */,
+				F6CD4C02AE4A73D774D5CB2E /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +302,8 @@
 				155A18D57B3049BABCF10CEC /* Info.plist */,
 				12DBB0B0EA57C13FE215A4E6 /* Selene-Bridging-Header.h */,
 				119C8462FD33355D88C9D301 /* selene.icon */,
+				2C3F4C969704F9873D7DB5A2 /* AppDelegate.swift */,
+				66544B3794C1CCACAC13247A /* CheckForUpdatesView.swift */,
 			);
 			name = App;
 			path = App;
@@ -395,6 +403,9 @@
 			dependencies = (
 			);
 			name = Selene;
+			packageProductDependencies = (
+				755E4B4D9B54A59AFC690236 /* Sparkle */,
+			);
 			productName = Selene;
 			productReference = C676F0B3F87946CD939353B8 /* Selene.app */;
 			productType = "com.apple.product-type.application";
@@ -423,6 +434,9 @@
 				Base,
 			);
 			mainGroup = 7C780ADBB51C4BC39FD3629A;
+			packageReferences = (
+				34AD463BB5DBBB879C797541 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			productRefGroup = 1E26C383889C451ABC0E02EB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -508,6 +522,8 @@
 				790A4A56BE0C53D5652DF9AC /* KeyCodeMap.swift in Sources */,
 				8CA849EA95C112B4CC41DB69 /* InputForwarder.swift in Sources */,
 				B3A3498A97FCCC43A0F14A35 /* BackgroundedSessionStore.swift in Sources */,
+				247E40928B1FE3208BC96B63 /* AppDelegate.swift in Sources */,
+				96094A89B362934175C7D5A1 /* CheckForUpdatesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,6 +785,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		34AD463BB5DBBB879C797541 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		755E4B4D9B54A59AFC690236 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34AD463BB5DBBB879C797541 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3C5303E358EE417F93855528 /* Project object */;
 }
