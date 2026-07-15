@@ -87,16 +87,17 @@ fi
 
 # --- 4. Sign the .dmg ---
 # Locally this reads the key from the login Keychain. In CI, set
-# SPARKLE_PRIVATE_KEY (the contents exported via `generate_keys -x`) instead.
-SIGN_ARGS=("$DMG_PATH")
+# SPARKLE_PRIVATE_KEY (the contents exported via `generate_keys -x`) instead -
+# piped in via --ed-key-file -, since the older -s flag is deprecated and no
+# longer works for keys generated in the newer (32-byte seed) format.
 if [ -n "${SPARKLE_PRIVATE_KEY:-}" ]; then
   echo "==> Signing with Sparkle EdDSA key from \$SPARKLE_PRIVATE_KEY"
-  SIGN_ARGS=(-s "$SPARKLE_PRIVATE_KEY" "$DMG_PATH")
+  SIGN_OUTPUT=$(echo "$SPARKLE_PRIVATE_KEY" | "$SIGN_UPDATE" --ed-key-file - "$DMG_PATH") || fail "sign_update failed - check that SPARKLE_PRIVATE_KEY is set correctly"
 else
   echo "==> Signing with Sparkle EdDSA key from Keychain"
+  SIGN_OUTPUT=$("$SIGN_UPDATE" "$DMG_PATH") || fail "sign_update failed - is the signing key in your login Keychain?"
 fi
 # sign_update prints a ready-to-paste `sparkle:edSignature="..." length="..."` string.
-SIGN_OUTPUT=$("$SIGN_UPDATE" "${SIGN_ARGS[@]}") || fail "sign_update failed - is the signing key in your login Keychain (or SPARKLE_PRIVATE_KEY set)?"
 echo "$SIGN_OUTPUT"
 
 ED_SIGNATURE=$(echo "$SIGN_OUTPUT" | sed -n 's/.*edSignature="\([^"]*\)".*/\1/p')
