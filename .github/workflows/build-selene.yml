@@ -1,0 +1,53 @@
+---
+name: Build - Selene
+
+permissions:
+  contents: read
+
+# Builds the native Swift app in Selene/ (xcodebuild, Debug config) as a
+# quick sanity check - separate from build.yml, which builds the legacy Qt
+# client in app/. Without this, a broken native build would only surface
+# when scripts/release.sh actually cuts a release.
+on:
+  push:
+    paths:
+      - "Selene/**"
+      - "moonlight-common-c/**"
+      - ".github/workflows/build-selene.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "Selene/**"
+      - "moonlight-common-c/**"
+      - ".github/workflows/build-selene.yml"
+
+concurrency:
+  group: build-selene-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-26
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Install OpenSSL
+        run: brew install openssl@3
+
+      - name: Build (Debug)
+        run: |
+          xcodebuild \
+            -project Selene/Selene.xcodeproj \
+            -scheme Selene \
+            -configuration Debug \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="-" \
+            DEVELOPMENT_TEAM="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=YES \
+            build
