@@ -15,6 +15,10 @@ struct StreamWindowView: View {
     let host: DiscoveredHost
     let app: GameStreamApp
     var resuming: Bool = false
+    /// Whatever the app grid tile already had loaded, if any - reused as a
+    /// blurred backdrop behind the connecting spinner (see
+    /// `ConnectingBackdrop`) instead of a flat black screen.
+    var boxArtData: Data?
 
     @State private var errorMessage: String?
     @State private var connectionController = StreamConnectionController()
@@ -24,6 +28,11 @@ struct StreamWindowView: View {
         ZStack {
             Color.black.ignoresSafeArea()
 
+            if !connectionController.isConnected {
+                ConnectingBackdrop(boxArtData: boxArtData)
+                    .ignoresSafeArea()
+            }
+
             if connectionController.isConnected {
                 VideoLayerView(displayLayer: connectionController.videoRenderer.displayLayer)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -31,19 +40,30 @@ struct StreamWindowView: View {
             }
 
             if !connectionController.isConnected {
-                VStack(spacing: 16) {
-                    ProgressView()
-                        .controlSize(.large)
-                        .tint(.white)
-                    Text("Connecting to \(app.name)…")
-                        .font(.title2.weight(.medium))
-                        .foregroundStyle(.white)
-                    if let errorMessage {
-                        Text(errorMessage)
-                            .font(.caption)
-                            .foregroundStyle(.white.opacity(0.6))
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 40)
+                VStack(spacing: 20) {
+                    if let boxArtData, let nsImage = NSImage(data: boxArtData) {
+                        Image(nsImage: nsImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 200, height: 267)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .shadow(color: .black.opacity(0.5), radius: 24, y: 12)
+                    }
+
+                    VStack(spacing: 16) {
+                        ProgressView()
+                            .controlSize(.large)
+                            .tint(.white)
+                        Text("Connecting to \(app.name)…")
+                            .font(.title2.weight(.medium))
+                            .foregroundStyle(.white)
+                        if let errorMessage {
+                            Text(errorMessage)
+                                .font(.caption)
+                                .foregroundStyle(.white.opacity(0.6))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 40)
+                        }
                     }
                 }
             }
@@ -69,7 +89,7 @@ struct StreamWindowView: View {
             guard let ip = host.resolvedHost, let serverUniqueId = host.serverUniqueId else { return }
             Task {
                 launchLogger.notice("Cancelling session on \(ip, privacy: .public)")
-                await GameStreamClient.cancelSession(ip: ip, httpsPort: 47984, serverUniqueId: serverUniqueId)
+                await GameStreamClient.cancelSession(ip: ip, httpsPort: SettingsStore.httpsPort, serverUniqueId: serverUniqueId)
             }
         }
     }
@@ -102,10 +122,19 @@ struct StreamWindowView: View {
             return
         }
 
-        // Sunshine's default HTTPS port. A future revision should carry the
-        // one reported by /serverinfo instead of assuming the default here.
-        let httpsPort: UInt16 = 47984
-        let config = StreamSessionConfig.make()
+        // SettingsStore.httpsPort defaults to Sunshine's standard port
+        // (47984) - user-overridable in Settings > Network for hosts on a
+        // non-default port. A future revision could instead carry the one
+        // reported by /serverinfo when available.
+        let httpsPort = SettingsStore.httpsPort
+        let resolution = SettingsStore.resolution.dimensions
+        let config = StreamSessionConfig.make(
+            width: resolution.width,
+            height: resolution.height,
+            fps: SettingsStore.fps,
+            bitrateKbps: SettingsStore.bitrateKbps,
+            audioConfig: SettingsStore.audioConfig
+        )
 
         // `resuming` reflects what the app grid believed when the user
         // clicked, which can be stale (e.g. right after backgrounding a
@@ -136,6 +165,29 @@ struct StreamWindowView: View {
             rtspSessionUrl: sessionUrl,
             config: config
         )
+    }
+}
+
+/// Full-bleed blurred backdrop for the connecting screen, built from the
+/// same (portrait) box art shown sharp in the foreground. Sunshine's box art
+/// is always a vertical poster, so naively fitting it as a background would
+/// leave big empty bars on either side - `.fill` instead scales it to cover
+/// the whole window, cropping top/bottom as needed, which doesn't matter
+/// once it's this blurred. Same trick Apple Music/Spotify use for portrait
+/// album art behind a "now playing" screen.
+private struct ConnectingBackdrop: View {
+    let boxArtData: Data?
+
+    var body: some View {
+        if let boxArtData, let nsImage = NSImage(data: boxArtData) {
+            Image(nsImage: nsImage)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipped()
+                .blur(radius: 60)
+                .overlay(Color.black.opacity(0.55))
+        }
     }
 }
 

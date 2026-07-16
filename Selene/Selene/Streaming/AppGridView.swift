@@ -23,10 +23,10 @@ private final class AppGridViewModel {
 
     private let host: DiscoveredHost
 
-    // Sunshine's default HTTPS port. A future revision should carry the one
-    // reported by /serverinfo (SunshineServerInfo.httpsPort) instead of
-    // assuming the default here.
-    private let httpsPort: UInt16 = 47984
+    // Defaults to Sunshine's standard HTTPS port, user-overridable in
+    // Settings > Network. A future revision could instead carry the one
+    // reported by /serverinfo (SunshineServerInfo.httpsPort) when available.
+    private let httpsPort: UInt16 = SettingsStore.httpsPort
 
     init(host: DiscoveredHost) {
         self.host = host
@@ -82,8 +82,10 @@ private final class AppGridViewModel {
 struct AppGridView: View {
     let host: DiscoveredHost
     /// `resuming: true` calls Sunshine's `/resume` instead of `/launch` -
-    /// only ever set for the tile matching `runningAppId`.
-    var onSelectApp: (GameStreamApp, _ resuming: Bool) -> Void
+    /// only ever set for the tile matching `runningAppId`. `boxArtData` is
+    /// whatever this tile already has loaded, if any, passed through so the
+    /// connecting screen doesn't have to re-fetch it.
+    var onSelectApp: (GameStreamApp, _ resuming: Bool, _ boxArtData: Data?) -> Void
 
     @State private var viewModel: AppGridViewModel
     // Finder-style selection: a single click just marks a tile selected (shows
@@ -91,7 +93,7 @@ struct AppGridView: View {
     // actually connects.
     @State private var selectedAppId: Int?
 
-    init(host: DiscoveredHost, onSelectApp: @escaping (GameStreamApp, _ resuming: Bool) -> Void) {
+    init(host: DiscoveredHost, onSelectApp: @escaping (GameStreamApp, _ resuming: Bool, _ boxArtData: Data?) -> Void) {
         self.host = host
         self.onSelectApp = onSelectApp
         _viewModel = State(initialValue: AppGridViewModel(host: host))
@@ -138,7 +140,7 @@ struct AppGridView: View {
                                             // switching to any other fullscreen app.
                                             backgroundedWindow.makeKeyAndOrderFront(nil)
                                         } else {
-                                            onSelectApp(entry.app, true)
+                                            onSelectApp(entry.app, true, entry.boxArtData)
                                         }
                                     },
                                     onStop: {
@@ -159,7 +161,7 @@ struct AppGridView: View {
                                     // already running - Stop it from its own
                                     // tile first.
                                     guard !isRunning else { return }
-                                    onSelectApp(entry.app, false)
+                                    onSelectApp(entry.app, false, entry.boxArtData)
                                 }
                                 .onTapGesture(count: 1) {
                                     selectedAppId = entry.app.id

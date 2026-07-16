@@ -12,14 +12,28 @@ struct StreamSessionConfig {
     let height: Int32
     let fps: Int32
     let bitrateKbps: Int32
+    /// From `AudioChannelConfig.channelCount`/`channelMask` (see
+    /// `SettingsStore.audioConfig`) - feeds both the `/launch`
+    /// `surroundAudioInfo` param and `STREAM_CONFIGURATION.audioConfiguration`.
+    let audioChannelCount: Int32
+    let audioChannelMask: Int32
     let remoteInputAesKey: Data // 16 bytes
     let remoteInputAesIv: Data // 16 bytes - only the first 4 are randomized, rest are zero (matches session.cpp)
 
-    static func make(width: Int32 = 1920, height: Int32 = 1080, fps: Int32 = 60, bitrateKbps: Int32 = 20000) -> StreamSessionConfig {
+    static func make(width: Int32 = 1920, height: Int32 = 1080, fps: Int32 = 60, bitrateKbps: Int32 = 20000, audioConfig: AudioChannelConfig = .stereo) -> StreamSessionConfig {
         let key = GameStreamCrypto.randomBytes(ofLength: 16)
         var iv = GameStreamCrypto.randomBytes(ofLength: 4)
         iv.append(Data(repeating: 0, count: 12))
-        return StreamSessionConfig(width: width, height: height, fps: fps, bitrateKbps: bitrateKbps, remoteInputAesKey: key, remoteInputAesIv: iv)
+        return StreamSessionConfig(
+            width: width,
+            height: height,
+            fps: fps,
+            bitrateKbps: bitrateKbps,
+            audioChannelCount: audioConfig.channelCount,
+            audioChannelMask: audioConfig.channelMask,
+            remoteInputAesKey: key,
+            remoteInputAesIv: iv
+        )
     }
 
     /// The `rikeyid` query parameter for `/launch` - the IV's first 4 bytes

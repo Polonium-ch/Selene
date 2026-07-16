@@ -33,10 +33,10 @@ final class PairingViewModel {
             return
         }
 
-        // Sunshine's default HTTPS port. A future revision should carry the
-        // one reported by /serverinfo (SunshineServerInfo.httpsPort) instead
-        // of assuming the default here.
-        let httpsPort: UInt16 = 47984
+        // Defaults to Sunshine's standard HTTPS port, user-overridable in
+        // Settings > Network. A future revision could instead carry the one
+        // reported by /serverinfo (SunshineServerInfo.httpsPort) when available.
+        let httpsPort = SettingsStore.httpsPort
 
         Task {
             let result = await GameStreamPairing.pair(

@@ -42,7 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
                       fps:(int)fps
               bitrateKbps:(int)bitrateKbps
         remoteInputAesKey:(NSData *)remoteInputAesKey
-         remoteInputAesIv:(NSData *)remoteInputAesIv;
+         remoteInputAesIv:(NSData *)remoteInputAesIv
+         audioChannelCount:(int)audioChannelCount
+          audioChannelMask:(int)audioChannelMask
+                packetSize:(int)packetSize;
 
 - (void)stop;
 

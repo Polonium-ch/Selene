@@ -47,7 +47,10 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
             fps: config.fps,
             bitrateKbps: config.bitrateKbps,
             remoteInputAesKey: config.remoteInputAesKey,
-            remoteInputAesIv: config.remoteInputAesIv
+            remoteInputAesIv: config.remoteInputAesIv,
+            audioChannelCount: config.audioChannelCount,
+            audioChannelMask: config.audioChannelMask,
+            packetSize: SettingsStore.packetSize
         )
     }
 

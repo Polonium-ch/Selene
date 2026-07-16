@@ -162,6 +162,9 @@ static void arDecodeAndPlaySample(char *sampleData, int sampleLength) {
               bitrateKbps:(int)bitrateKbps
         remoteInputAesKey:(NSData *)remoteInputAesKey
          remoteInputAesIv:(NSData *)remoteInputAesIv
+         audioChannelCount:(int)audioChannelCount
+          audioChannelMask:(int)audioChannelMask
+                packetSize:(int)packetSize
 {
     currentSession = self;
 
@@ -193,9 +196,9 @@ static void arDecodeAndPlaySample(char *sampleData, int sampleLength) {
         streamConfig.height = height;
         streamConfig.fps = fps;
         streamConfig.bitrate = bitrateKbps;
-        streamConfig.packetSize = 1024;
+        streamConfig.packetSize = packetSize;
         streamConfig.streamingRemotely = STREAM_CFG_AUTO;
-        streamConfig.audioConfiguration = AUDIO_CONFIGURATION_STEREO;
+        streamConfig.audioConfiguration = MAKE_AUDIO_CONFIGURATION(audioChannelCount, audioChannelMask);
         streamConfig.supportedVideoFormats = VIDEO_FORMAT_H264;
         streamConfig.encryptionFlags = ENCFLG_NONE;
         memcpy(streamConfig.remoteInputAesKey, aesKeyCopy.bytes, MIN(aesKeyCopy.length, sizeof(streamConfig.remoteInputAesKey)));

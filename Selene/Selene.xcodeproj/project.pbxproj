@@ -43,6 +43,9 @@
 		89DAFF90884D013A91444710 /* GameStreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13993F6AF01EA23C74906CC0 /* GameStreamClient.swift */; };
 		8AEEC67440CF4D9A561CBF4F /* PairingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA8AA61D136EFDF5CC3394 /* PairingStore.swift */; };
 		3AA0F0B1B4A24E2CBFEF0A22 /* GamepadForwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0F0B1B4A24E2CBFEF0A11 /* GamepadForwarder.swift */; };
+		5F00A1B2C3D4E5F6A7B8C9D3 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F00A1B2C3D4E5F6A7B8C9D1 /* SettingsStore.swift */; };
+		5F00A1B2C3D4E5F6A7B8C9D4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F00A1B2C3D4E5F6A7B8C9D2 /* SettingsView.swift */; };
+		6A11B2C3D4E5F60718293A4C /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A11B2C3D4E5F60718293A4B /* AboutView.swift */; };
 		8CA849EA95C112B4CC41DB69 /* InputForwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B948AAB8A46F3382515FE9 /* InputForwarder.swift */; };
 		96094A89B362934175C7D5A1 /* CheckForUpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66544B3794C1CCACAC13247A /* CheckForUpdatesView.swift */; };
 		96F14CB69A2F4405BF74CCAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF267D53FB4F6F937AE0F9 /* ContentView.swift */; };
@@ -146,6 +149,9 @@
 		D3DA8AA61D136EFDF5CC3394 /* PairingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingStore.swift; sourceTree = "<group>"; };
 		D4F145337B05D9971FDF7C46 /* src/Platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = src/Platform.h; sourceTree = "<group>"; };
 		3AA0F0B1B4A24E2CBFEF0A11 /* GamepadForwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GamepadForwarder.swift; path = GamepadForwarder.swift; sourceTree = "<group>"; };
+		5F00A1B2C3D4E5F6A7B8C9D1 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsStore.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		5F00A1B2C3D4E5F6A7B8C9D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		6A11B2C3D4E5F60718293A4B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutView.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		D5B948AAB8A46F3382515FE9 /* InputForwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputForwarder.swift; path = InputForwarder.swift; sourceTree = "<group>"; };
 		D6F8C5A6A3734BF894BD862A /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = System/Library/Frameworks/Network.framework; sourceTree = SDKROOT; };
 		D7D486C3614892285A557B32 /* src/VideoStream.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/VideoStream.c; sourceTree = "<group>"; };
@@ -306,6 +312,7 @@
 				119C8462FD33355D88C9D301 /* selene.icon */,
 				2C3F4C969704F9873D7DB5A2 /* AppDelegate.swift */,
 				66544B3794C1CCACAC13247A /* CheckForUpdatesView.swift */,
+				6A11B2C3D4E5F60718293A4B /* AboutView.swift */,
 			);
 			name = App;
 			path = App;
@@ -386,8 +393,19 @@
 				7E6144B89B07327E93344ED8 /* App */,
 				A8E74D1594C5460E9253AAD2 /* Discovery */,
 				22BB46ABBDF0BBEBD28220D6 /* Streaming */,
+				5F00A1B2C3D4E5F6A7B8C9D5 /* Settings */,
 			);
 			path = Selene;
+			sourceTree = "<group>";
+		};
+		5F00A1B2C3D4E5F6A7B8C9D5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5F00A1B2C3D4E5F6A7B8C9D1 /* SettingsStore.swift */,
+				5F00A1B2C3D4E5F6A7B8C9D2 /* SettingsView.swift */,
+			);
+			name = Settings;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -525,6 +543,9 @@
 				790A4A56BE0C53D5652DF9AC /* KeyCodeMap.swift in Sources */,
 				8CA849EA95C112B4CC41DB69 /* InputForwarder.swift in Sources */,
 				3AA0F0B1B4A24E2CBFEF0A22 /* GamepadForwarder.swift in Sources */,
+				5F00A1B2C3D4E5F6A7B8C9D3 /* SettingsStore.swift in Sources */,
+				5F00A1B2C3D4E5F6A7B8C9D4 /* SettingsView.swift in Sources */,
+				6A11B2C3D4E5F60718293A4C /* AboutView.swift in Sources */,
 				B3A3498A97FCCC43A0F14A35 /* BackgroundedSessionStore.swift in Sources */,
 				247E40928B1FE3208BC96B63 /* AppDelegate.swift in Sources */,
 				96094A89B362934175C7D5A1 /* CheckForUpdatesView.swift in Sources */,

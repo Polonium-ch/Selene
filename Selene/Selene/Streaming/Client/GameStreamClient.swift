@@ -77,12 +77,12 @@ enum GameStreamClient {
             return nil
         }
 
-        // AUDIO_CONFIGURATION_STEREO = MAKE_AUDIO_CONFIGURATION(2, 0x3); these
-        // function-like macros aren't visible to Swift, so the channel
-        // count/mask are inlined here instead of calling them.
-        let channelCount = 2
-        let channelMask = 0x3
-        let surroundAudioInfo = (channelMask << 16) | channelCount
+        // Matches Limelight.h's SURROUNDAUDIOINFO_FROM_AUDIO_CONFIGURATION -
+        // that macro (and MAKE_AUDIO_CONFIGURATION it's built from) isn't
+        // visible to Swift as a function-like macro, so the formula is
+        // inlined here instead, over the real channel count/mask picked in
+        // Settings > Audio (see StreamSessionConfig.make(audioConfig:)).
+        let surroundAudioInfo = (Int(config.audioChannelMask) << 16) | Int(config.audioChannelCount)
         let gamepadMask = await GamepadForwarder.attachedGamepadMask
 
         var params: [(String, String)] = [

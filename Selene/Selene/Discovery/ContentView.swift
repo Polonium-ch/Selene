@@ -54,8 +54,8 @@ struct ContentView: View {
             // matching the legacy Qt client's in-place navigation instead of
             // spawning a whole new OS window just to browse apps.
             if let activeHost {
-                AppGridView(host: activeHost) { app, resuming in
-                    openWindow(value: StreamTarget(host: activeHost, app: app, resuming: resuming))
+                AppGridView(host: activeHost) { app, resuming, boxArtData in
+                    openWindow(value: StreamTarget(host: activeHost, app: app, resuming: resuming, boxArtData: boxArtData))
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigation) {
