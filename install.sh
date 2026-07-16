@@ -4,7 +4,7 @@
 # there's no paid Developer ID behind this project).
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/Polonium-ch/Selene/main/install.sh | bash
+#   curl -fsSL http://install.getselene.ch/ | bash
 set -euo pipefail
 
 REPO="Polonium-ch/Selene"

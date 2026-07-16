@@ -72,7 +72,7 @@ Selene isn't notarized by Apple (no paid Developer ID behind this project yet), 
 Open Terminal and run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Polonium-ch/Selene/main/install.sh | bash
+curl -fsSL http://install.getselene.ch/ | bash
 ```
 
 This grabs the latest release, installs `Selene.app` to `/Applications`, and clears the quarantine flag so it opens normally on the first launch.
@@ -80,9 +80,9 @@ This grabs the latest release, installs `Selene.app` to `/Applications`, and cle
 ### Manual
 
 - **Download the `.dmg`** from the [latest release](https://github.com/Polonium-ch/Selene/releases/latest), open it, drag `Selene.app` to `/Applications`, then clear the quarantine flag yourself:
-  ```bash
-  xattr -cr /Applications/Selene.app
-  ```
+    ```bash
+    xattr -cr /Applications/Selene.app
+    ```
 - **Or build it from source** - see [Building](#-building) below.
 
 ---

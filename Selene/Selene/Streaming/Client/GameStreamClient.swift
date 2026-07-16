@@ -83,6 +83,7 @@ enum GameStreamClient {
         let channelCount = 2
         let channelMask = 0x3
         let surroundAudioInfo = (channelMask << 16) | channelCount
+        let gamepadMask = await GamepadForwarder.attachedGamepadMask
 
         var params: [(String, String)] = [
             ("appid", String(appId)),
@@ -93,7 +94,7 @@ enum GameStreamClient {
             ("rikeyid", String(config.rikeyId)),
             ("localAudioPlayMode", "0"),
             ("surroundAudioInfo", String(surroundAudioInfo)),
-            ("remoteControllersBitmap", "0"),
+            ("remoteControllersBitmap", String(gamepadMask)),
             ("gcmap", "0"),
             ("gcpersist", "0"),
         ]

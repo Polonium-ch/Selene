@@ -16,6 +16,7 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
     let videoRenderer = VideoDecodeRenderer()
     private let audioRenderer = AudioDecodeRenderer()
     private let inputForwarder = InputForwarder()
+    private let gamepadForwarder = GamepadForwarder.shared
     private var session: GameStreamSession?
 
     /// Fired when the user presses the background hotkey (Ctrl+Option+Shift+Q)
@@ -55,6 +56,7 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
         videoRenderer.reset()
         audioRenderer.reset()
         inputForwarder.stop()
+        gamepadForwarder.stop()
     }
 
     // These are invoked by GameStreamSession.mm via dispatch_async(dispatch_get_main_queue()),
@@ -78,6 +80,7 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
         MainActor.assumeIsolated {
             isConnected = true
             inputForwarder.start()
+            gamepadForwarder.start()
         }
     }
 
@@ -86,6 +89,7 @@ final class StreamConnectionController: NSObject, GameStreamSessionDelegate {
         MainActor.assumeIsolated {
             isConnected = false
             inputForwarder.stop()
+            gamepadForwarder.stop()
         }
     }
 

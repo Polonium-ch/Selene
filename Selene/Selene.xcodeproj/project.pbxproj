@@ -42,6 +42,7 @@
 		86B0F3B7AF795F1A16A6268E /* StreamSessionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB96BC9EC5C5A8603C137A9D /* StreamSessionConfig.swift */; };
 		89DAFF90884D013A91444710 /* GameStreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13993F6AF01EA23C74906CC0 /* GameStreamClient.swift */; };
 		8AEEC67440CF4D9A561CBF4F /* PairingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA8AA61D136EFDF5CC3394 /* PairingStore.swift */; };
+		3AA0F0B1B4A24E2CBFEF0A22 /* GamepadForwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA0F0B1B4A24E2CBFEF0A11 /* GamepadForwarder.swift */; };
 		8CA849EA95C112B4CC41DB69 /* InputForwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B948AAB8A46F3382515FE9 /* InputForwarder.swift */; };
 		96094A89B362934175C7D5A1 /* CheckForUpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66544B3794C1CCACAC13247A /* CheckForUpdatesView.swift */; };
 		96F14CB69A2F4405BF74CCAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF267D53FB4F6F937AE0F9 /* ContentView.swift */; };
@@ -144,6 +145,7 @@
 		D3B1AE7AE64C56644AECA280 /* nanors/deps/obl/oblas_lite.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = nanors/deps/obl/oblas_lite.c; sourceTree = "<group>"; };
 		D3DA8AA61D136EFDF5CC3394 /* PairingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingStore.swift; sourceTree = "<group>"; };
 		D4F145337B05D9971FDF7C46 /* src/Platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = src/Platform.h; sourceTree = "<group>"; };
+		3AA0F0B1B4A24E2CBFEF0A11 /* GamepadForwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GamepadForwarder.swift; path = GamepadForwarder.swift; sourceTree = "<group>"; };
 		D5B948AAB8A46F3382515FE9 /* InputForwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputForwarder.swift; path = InputForwarder.swift; sourceTree = "<group>"; };
 		D6F8C5A6A3734BF894BD862A /* Network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Network.framework; path = System/Library/Frameworks/Network.framework; sourceTree = SDKROOT; };
 		D7D486C3614892285A557B32 /* src/VideoStream.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/VideoStream.c; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			children = (
 				195F4E21BAFBCEC1EE98609B /* KeyCodeMap.swift */,
 				D5B948AAB8A46F3382515FE9 /* InputForwarder.swift */,
+				3AA0F0B1B4A24E2CBFEF0A11 /* GamepadForwarder.swift */,
 			);
 			name = Input;
 			path = Input;
@@ -521,6 +524,7 @@
 				1797633F12274586ACF20FE7 /* StreamWindowView.swift in Sources */,
 				790A4A56BE0C53D5652DF9AC /* KeyCodeMap.swift in Sources */,
 				8CA849EA95C112B4CC41DB69 /* InputForwarder.swift in Sources */,
+				3AA0F0B1B4A24E2CBFEF0A22 /* GamepadForwarder.swift in Sources */,
 				B3A3498A97FCCC43A0F14A35 /* BackgroundedSessionStore.swift in Sources */,
 				247E40928B1FE3208BC96B63 /* AppDelegate.swift in Sources */,
 				96094A89B362934175C7D5A1 /* CheckForUpdatesView.swift in Sources */,
