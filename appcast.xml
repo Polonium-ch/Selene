@@ -10,6 +10,14 @@
             
         -->
     <item>
+      <title>Version 0.1.4</title>
+      <pubDate>Thu, 16 Jul 2026 18:02:23 +0000</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <enclosure url="https://github.com/Polonium-ch/Selene/releases/download/v0.1.4/Selene-0.1.4.dmg" sparkle:edSignature="EdDfB7KSxVD+HLb6Sau602hO0oJ0hpg9exkNaLbxADlYMNFJ0V3OvYH0hmBU7GKe1ba2DvuzIEbmsRcQg+JfBg==" length="5771097" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Version 0.1.3</title>
       <pubDate>Thu, 16 Jul 2026 11:03:27 +0000</pubDate>
       <sparkle:version>4</sparkle:version>
