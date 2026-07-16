@@ -17,3 +17,9 @@ DerivedData/
 ## Sparkle release packaging (scripts/build-and-sign-dmg.sh)
 .sparkle-tools/
 *.dmg
+
+## site/ (Next.js on Vercel)
+site/node_modules/
+site/.next/
+site/.vercel/
+site/out/

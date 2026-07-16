@@ -3,14 +3,17 @@ name: Bug report
 about: Report a problem with Selene
 
 ---
+
+> **Apple Silicon only.** Selene does not support Intel Macs, and there are no plans to add support. Issues reporting problems on an Intel Mac will be closed without investigation.
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
 **Steps to reproduce**
 Any special steps that are required for the bug to appear.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem. If the issue is related to video glitching or poor quality, please include screenshots.
+**Screenshots or video**
+If applicable, add screenshots or a screen recording to help explain your problem. If the issue is related to video glitching or poor quality, please include media - a screen recording is especially helpful for anything motion-related (stutter, tearing, frame pacing).
 
 **Affected games**
 List the games you've tried that exhibit the issue. To see if the issue is game-specific, try streaming Steam Big Picture and see if the issue persists there.
@@ -27,7 +30,7 @@ List the games you've tried that exhibit the issue. To see if the issue is game-
 **Client details (please complete the following information)**
 - macOS version:
 - Selene version/commit:
-- Mac model (Intel/Apple Silicon):
+- Mac model:
 
 **Server details (please complete the following information)**
 - OS:

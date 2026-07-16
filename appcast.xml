@@ -15,6 +15,17 @@
       <sparkle:version>5</sparkle:version>
       <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+<h2>New</h2>
+<ul>
+<li>Native Settings window - resolution, frame rate, bitrate, audio channels, HTTPS port, and packet size</li>
+<li>Native About window</li>
+</ul>
+<h2>Changed</h2>
+<ul>
+<li>Connecting screen now shows a blurred box-art backdrop instead of flat black</li>
+</ul>
+      ]]></description>
       <enclosure url="https://github.com/Polonium-ch/Selene/releases/download/v0.1.4/Selene-0.1.4.dmg" sparkle:edSignature="EdDfB7KSxVD+HLb6Sau602hO0oJ0hpg9exkNaLbxADlYMNFJ0V3OvYH0hmBU7GKe1ba2DvuzIEbmsRcQg+JfBg==" length="5771097" type="application/octet-stream"/>
     </item>
     <item>
@@ -23,6 +34,16 @@
       <sparkle:version>4</sparkle:version>
       <sparkle:shortVersionString>0.1.3</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+<h2>New</h2>
+<ul>
+<li>Gamepad support - buttons, sticks, and analog triggers for any controller macOS pairs natively (DualSense, DualShock 4, Xbox, and other GameController-recognized pads)</li>
+</ul>
+<h2>Changed</h2>
+<ul>
+<li>Install script now points at install.getselene.ch</li>
+</ul>
+      ]]></description>
       <enclosure url="https://github.com/Polonium-ch/Selene/releases/download/v0.1.3/Selene-0.1.3.dmg" sparkle:edSignature="H7bVm3PeXROfTnxUkROCzNBCjcLaSOtmcJkF+uldQjYma1WM1vYsEDgDeBW0HV4m/Hh8OKKLkTp6BaCOyTG6DA==" length="5682205" type="application/octet-stream"/>
     </item>
     <item>
@@ -31,6 +52,12 @@
       <sparkle:version>3</sparkle:version>
       <sparkle:shortVersionString>0.1.2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+<h2>Fixed</h2>
+<ul>
+<li>Sparkle update signing in CI</li>
+</ul>
+      ]]></description>
       <enclosure url="https://github.com/Polonium-ch/Selene/releases/download/v0.1.2/Selene-0.1.2.dmg" sparkle:edSignature="88Ap1a+sJxjK68uPaR4vL7UU7e5o6qMekMrtXYzM786IJPYApzi63iPu4ZO4wraYnDSKUyxmRo/Zet3lLPgdDg==" length="5667995" type="application/octet-stream"/>
     </item>
     <item>
@@ -39,6 +66,18 @@
       <sparkle:version>1</sparkle:version>
       <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+<h2>New</h2>
+<ul>
+<li>Initial native SwiftUI rewrite of the Moonlight/Sunshine client</li>
+<li>Bonjour and manual host discovery</li>
+<li>NVIDIA GameStream / Sunshine PIN pairing</li>
+<li>Hardware H.264 decoding (VideoToolbox) and native Opus audio (AudioToolbox)</li>
+<li>Keyboard and mouse input forwarding</li>
+<li>Session background / resume support</li>
+<li>In-app auto-updates via Sparkle</li>
+</ul>
+      ]]></description>
       <enclosure url="https://github.com/Polonium-ch/Selene/releases/download/v0.1.0/Selene-0.1.0.dmg" sparkle:edSignature="+5MBrFcI4t061IS+bsdhcUjQnQomgCR0aM0UXwOYcMpjlqYn6OSSAzP+mRzMsUyyV1o571odFzt15kdOTsvCAA==" length="3583777" type="application/octet-stream"/>
     </item>
   </channel>

@@ -1,0 +1,6 @@
+# Normalize everything to LF. Selene only ever runs/builds on macOS, and the
+# repo ships shell scripts (install.sh, scripts/*.sh) whose shebang breaks if
+# a CRLF sneaks in - easy to happen by accident when committing from Windows.
+* text=auto eol=lf
+
+*.sh text eol=lf

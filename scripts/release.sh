@@ -8,6 +8,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 INFO_PLIST="$ROOT_DIR/Selene/Selene/App/Info.plist"
+CHANGELOG="$ROOT_DIR/CHANGELOG.md"
 
 fail() { echo "error: $1" >&2; exit 1; }
 
@@ -26,11 +27,36 @@ git -C "$ROOT_DIR" diff --quiet && git -C "$ROOT_DIR" diff --cached --quiet \
 TAG="v$SHORT_VERSION"
 git -C "$ROOT_DIR" rev-parse "$TAG" >/dev/null 2>&1 && fail "tag $TAG already exists"
 
+# CHANGELOG.md is what scripts/update-appcast.sh turns into the Sparkle
+# update notes - an empty [Unreleased] means users would see a silent
+# update, so refuse to cut the release instead of shipping that.
+UNRELEASED_BODY=$(awk '/^## \[Unreleased\]/{flag=1; next} /^## \[/{flag=0} flag' "$CHANGELOG")
+[ -n "$(echo "$UNRELEASED_BODY" | tr -d '[:space:]')" ] \
+  || fail "CHANGELOG.md has nothing under [Unreleased] - document this release before tagging it"
+
 echo "==> Bumping $CURRENT_VERSION (build $CURRENT_BUILD) -> $SHORT_VERSION (build $BUILD_NUMBER)"
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $SHORT_VERSION" "$INFO_PLIST"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$INFO_PLIST"
 
-git -C "$ROOT_DIR" add "$INFO_PLIST"
+RELEASE_DATE=$(date +%Y-%m-%d)
+python3 - "$CHANGELOG" "$SHORT_VERSION" "$RELEASE_DATE" <<'PY'
+import sys
+
+path, version, date = sys.argv[1:]
+with open(path, encoding="utf-8") as f:
+    content = f.read()
+
+content = content.replace(
+    "## [Unreleased]",
+    f"## [Unreleased]\n\n## [{version}] - {date}",
+    1,
+)
+
+with open(path, "w", encoding="utf-8") as f:
+    f.write(content)
+PY
+
+git -C "$ROOT_DIR" add "$INFO_PLIST" "$CHANGELOG"
 git -C "$ROOT_DIR" commit -m "Bump version to $SHORT_VERSION"
 git -C "$ROOT_DIR" push origin HEAD
 

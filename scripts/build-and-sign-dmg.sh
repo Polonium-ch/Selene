@@ -114,21 +114,11 @@ if [ -n "${GITHUB_OUTPUT:-}" ]; then
   } >> "$GITHUB_OUTPUT"
 fi
 
+DOWNLOAD_URL="https://github.com/Polonium-ch/Selene/releases/download/v$SHORT_VERSION/Selene-$SHORT_VERSION.dmg"
+
 echo
-echo "==> Done. Paste this into appcast.xml (fill in <title>/<pubDate> and the release download URL):"
-echo
-cat <<EOF
-<item>
-    <title>Version $SHORT_VERSION</title>
-    <pubDate>$(date -u +"%a, %d %b %Y %H:%M:%S +0000")</pubDate>
-    <sparkle:version>$BUILD_NUMBER</sparkle:version>
-    <sparkle:shortVersionString>$SHORT_VERSION</sparkle:shortVersionString>
-    <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-    <enclosure
-        url="https://github.com/Polonium-ch/Selene/releases/download/v$SHORT_VERSION/Selene-$SHORT_VERSION.dmg"
-        $SIGN_OUTPUT
-        type="application/octet-stream" />
-</item>
-EOF
-echo
-echo "Next steps: create a GitHub Release tagged v$SHORT_VERSION, upload $DMG_PATH, then add the item above to appcast.xml and push to main."
+echo "==> Done. Next steps:"
+echo "  1. Create a GitHub Release tagged v$SHORT_VERSION and upload $DMG_PATH"
+echo "  2. Make sure CHANGELOG.md has a '## [$SHORT_VERSION]' section (scripts/release.sh does this for you if you use it instead of running this script by hand)"
+echo "  3. scripts/update-appcast.sh \"$SHORT_VERSION\" \"$BUILD_NUMBER\" \"$DMG_LENGTH\" \"$ED_SIGNATURE\" \"$DOWNLOAD_URL\""
+echo "  4. Commit and push the updated appcast.xml to main"

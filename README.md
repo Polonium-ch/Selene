@@ -20,7 +20,7 @@
   <img alt="swift" src="https://img.shields.io/badge/Swift-6-174d77?style=for-the-badge&logo=swift&logoColor=white&labelColor=1a1b26" />
   <img alt="status" src="https://img.shields.io/badge/status-active%20development-174d77?style=for-the-badge&labelColor=1a1b26" />
   <a href="LICENSE">
-    <img alt="license" src="https://img.shields.io/github/license/viincnt/Selene?style=for-the-badge&colorA=1a1b26&colorB=174d77" />
+    <img alt="license" src="https://img.shields.io/github/license/Polonium-ch/Selene?style=for-the-badge&colorA=1a1b26&colorB=174d77" />
   </a>
 </p>
 
@@ -38,15 +38,30 @@ Originally forked from `moonlight-qt`, the project has since evolved into a comp
 
 # ✨ Features
 
-- ✅ Native SwiftUI + AppKit interface
-- ✅ Bonjour host discovery
-- ✅ Manual host discovery over VPN or WAN
-- ✅ NVIDIA GameStream PIN pairing
-- ✅ Hardware H.264 decoding (VideoToolbox)
-- ✅ Native Opus decoding (AudioToolbox)
-- ✅ Keyboard & mouse forwarding
-- ✅ Session background / resume support
-- ✅ Real Sunshine compatibility
+### Streaming
+
+- App library browsing with box art
+- Hardware H.264 decoding (VideoToolbox)
+- Native Opus audio decoding (AudioToolbox), with stereo, 5.1, and 7.1 output
+- Session background / resume support
+- Blurred box-art backdrop while connecting
+
+### Discovery & Pairing
+
+- Bonjour (mDNS) host discovery on the LAN
+- Manual host entry for VPN or WAN setups
+- NVIDIA GameStream / Sunshine PIN pairing
+
+### Input
+
+- Keyboard & mouse forwarding
+- Gamepad support for any controller macOS pairs natively through the GameController framework (DualSense, DualShock 4, Xbox, and other MFi/HID pads) — buttons, sticks, and analog triggers are forwarded; rumble, touchpad, motion, and battery reporting aren't wired up yet
+
+### Settings & Personalization
+
+- Native Settings window — resolution, frame rate, bitrate, audio channels, HTTPS port, and packet size are wired end-to-end; the rest of the legacy client's preference surface is persisted but marked "Not Yet" until its backend exists
+- Native About window
+- In-app auto-updates via Sparkle
 
 ---
 
@@ -157,38 +172,14 @@ Long-term, networking and cryptographic orchestration are planned to migrate to 
 
 ---
 
-# ✅ Current Progress
-
-### Streaming
-
-- ✅ Sunshine pairing
-- ✅ App list browsing
-- ✅ Box art loading
-- ✅ Video streaming
-- ✅ Audio streaming
-- ✅ Keyboard input
-- ✅ Mouse input
-- ✅ Background / Resume
-
-### Networking
-
-- ✅ Bonjour discovery
-- ✅ Manual host connection
-- ✅ LAN
-- ✅ VPN
-
----
-
 # 🚧 Roadmap
 
-- [ ] Gamepad support
 - [ ] HEVC decoding
 - [ ] AV1 decoding
-- [ ] Surround audio
 - [ ] Codec capability negotiation
-- [ ] Preferences window
-- [ ] Streaming settings
-- [ ] Performance metrics
+- [ ] HDR / YUV 4:4:4
+- [ ] Performance overlay
+- [ ] Gamepad rumble, touchpad, motion, and battery reporting
 
 ---
 
@@ -237,6 +228,34 @@ make release
 ```
 
 </details>
+
+---
+
+# 🤝 Contributing
+
+### Issues
+
+Before opening one, check the [Roadmap](#-roadmap) - if it's already listed, there's no need for a duplicate.
+
+- **Apple Silicon only.** Selene doesn't support Intel Macs, and there are no plans to add support. Issues reporting problems on an Intel Mac will be closed without investigation.
+- Bug reports and feature requests each have a template that opens automatically - fill it in fully. Reports missing the requested details (client/host versions, logs, screenshots or video) will likely just get a follow-up question instead of a fix.
+
+### Pull Requests
+
+- Streaming, input, and pairing code breaks silently - PRs need to say what was actually tested (client Mac/macOS version, host Sunshine version/GPU) and how, not just "should work."
+- UI or rendering changes need before/after screenshots or a recording.
+- Keep PRs focused - unrelated formatting or refactors bundled into a bug fix make it harder to review and will likely get pushed back.
+- The PR template covers all of this - it opens automatically when you create a PR.
+
+### Security
+
+Found a vulnerability (pairing bypass, mutual-TLS weakness, session interception, that kind of thing)? Please don't open a public issue for it - see [SECURITY.md](SECURITY.md) for how to report it privately instead.
+
+---
+
+# 📝 Changelog
+
+Released versions are documented in [CHANGELOG.md](CHANGELOG.md), following the same **New** / **Changed** / **Fixed** categories the in-app Sparkle updater shows.
 
 ---
 
