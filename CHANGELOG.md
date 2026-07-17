@@ -6,6 +6,17 @@ This file is the single source of truth for release notes: `scripts/release.sh` 
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-07-17
+
+### New
+
+- "Unpair" option in a host's context menu
+
+### Changed
+
+- Pairing status now reconciles with what the host itself reports (`/serverinfo`'s `PairStatus`), so a host unpaired from Sunshine's own UI no longer shows as paired here
+- Cryptography (identity generation/persistence, AES, SHA, RSA-SHA256 signing) now runs through a Rust crate on top of OpenSSL, replacing the previous Objective-C++ implementation - no behavior change for existing pairings
+
 ## [0.1.4] - 2026-07-16
 
 ### New
