@@ -32,7 +32,7 @@ with open(changelog_path, encoding="utf-8") as f:
     changelog = f.read()
 
 section_re = re.compile(
-    rf"^## \[{re.escape(short_version)}\].*$\n(.*?)(?=^## \[|\Z)",
+    rf"^## \[{re.escape(short_version)}\][^\n]*\n(.*?)(?=^## \[|\Z)",
     re.MULTILINE | re.DOTALL,
 )
 match = section_re.search(changelog)

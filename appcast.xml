@@ -10,6 +10,25 @@
             
         -->
     <item>
+      <title>Version 0.1.5</title>
+      <pubDate>Fri, 17 Jul 2026 11:18:28 +0000</pubDate>
+      <sparkle:version>6</sparkle:version>
+      <sparkle:shortVersionString>0.1.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+<h2>New</h2>
+<ul>
+<li>&quot;Unpair&quot; option in a host&#x27;s context menu</li>
+</ul>
+<h2>Changed</h2>
+<ul>
+<li>Pairing status now reconciles with what the host itself reports (`/serverinfo`&#x27;s `PairStatus`), so a host unpaired from Sunshine&#x27;s own UI no longer shows as paired here</li>
+<li>Cryptography (identity generation/persistence, AES, SHA, RSA-SHA256 signing) now runs through a Rust crate on top of OpenSSL, replacing the previous Objective-C++ implementation - no behavior change for existing pairings</li>
+</ul>
+      ]]></description>
+      <enclosure url="https://github.com/Polonium-ch/Selene/releases/download/v0.1.5/Selene-0.1.5.dmg" sparkle:edSignature="f3T4FGtqWuPLRuBnJ2UKNCXXVN1mAmMZoE9erKqKNBWU8aqF86WCtniTAOMCQO4DJ1gGAfWhW1foRAUVAY5dAg==" length="6872760" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Version 0.1.4</title>
       <pubDate>Thu, 16 Jul 2026 18:02:23 +0000</pubDate>
       <sparkle:version>5</sparkle:version>
