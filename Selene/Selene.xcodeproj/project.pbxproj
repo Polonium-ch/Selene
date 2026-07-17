@@ -167,6 +167,7 @@
 		ED42608B92245AC656E3AF73 /* enet/peer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = enet/peer.c; sourceTree = "<group>"; };
 		F8FA8F0CBB523CD0168C5C16 /* src/RtpAudioQueue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = src/RtpAudioQueue.c; sourceTree = "<group>"; };
 		FBA21C37A5BDEAA60FDB9047 /* GameStreamCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameStreamCrypto.h; sourceTree = "<group>"; };
+		10675BC939815E5F2FE5427E /* libselene_crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "RustCrypto/target/aarch64-apple-darwin/release/libselene_crypto.a"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				D6F8C5A6A3734BF894BD862A /* Network.framework */,
+				10675BC939815E5F2FE5427E /* libselene_crypto.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -415,6 +417,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A6DAC2BD4BFF4410B25AFB53 /* Build configuration list for PBXNativeTarget "Selene" */;
 			buildPhases = (
+				036F2BBAB19CCE496A92F7F0 /* Build Rust Crypto Crate */,
 				BBB2669850AE44C8A673E618 /* Sources */,
 				CEE338045B864D269E476A2B /* Frameworks */,
 				04F2D49A4DE14303B6C74982 /* Resources */,
@@ -477,6 +480,33 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		036F2BBAB19CCE496A92F7F0 /* Build Rust Crypto Crate */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/RustCrypto/Cargo.toml",
+				"$(SRCROOT)/RustCrypto/src/lib.rs",
+				"$(SRCROOT)/RustCrypto/src/crypto.rs",
+				"$(SRCROOT)/RustCrypto/src/identity.rs",
+				"$(SRCROOT)/RustCrypto/src/ffi.rs",
+			);
+			name = "Build Rust Crypto Crate";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/RustCrypto/target/aarch64-apple-darwin/release/libselene_crypto.a",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$HOME/.cargo/bin:$PATH\"\nOPENSSL_DIR=/opt/homebrew/opt/openssl@3 cargo build --release --manifest-path \"$SRCROOT/RustCrypto/Cargo.toml\" --target aarch64-apple-darwin\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BBB2669850AE44C8A673E618 /* Sources */ = {
@@ -589,6 +619,7 @@
 					"$(PROJECT_DIR)/../moonlight-common-c/moonlight-common-c/nanors",
 					"$(PROJECT_DIR)/../moonlight-common-c/moonlight-common-c/nanors/deps",
 					"$(PROJECT_DIR)/../moonlight-common-c/moonlight-common-c/nanors/deps/obl",
+					"$(PROJECT_DIR)/RustCrypto/include",
 				);
 				INFOPLIST_FILE = Selene/App/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
@@ -599,6 +630,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
+					"$(PROJECT_DIR)/RustCrypto/target/aarch64-apple-darwin/release/libselene_crypto.a",
 					"/opt/homebrew/opt/openssl@3/lib/libssl.a",
 					"/opt/homebrew/opt/openssl@3/lib/libcrypto.a",
 				);
@@ -647,7 +679,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -709,6 +741,7 @@
 					"$(PROJECT_DIR)/../moonlight-common-c/moonlight-common-c/nanors",
 					"$(PROJECT_DIR)/../moonlight-common-c/moonlight-common-c/nanors/deps",
 					"$(PROJECT_DIR)/../moonlight-common-c/moonlight-common-c/nanors/deps/obl",
+					"$(PROJECT_DIR)/RustCrypto/include",
 				);
 				INFOPLIST_FILE = Selene/App/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
@@ -719,6 +752,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
+					"$(PROJECT_DIR)/RustCrypto/target/aarch64-apple-darwin/release/libselene_crypto.a",
 					"/opt/homebrew/opt/openssl@3/lib/libssl.a",
 					"/opt/homebrew/opt/openssl@3/lib/libcrypto.a",
 				);
@@ -767,7 +801,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

@@ -5,13 +5,22 @@ client fully functional with C/C++ for anything that isn't UI. Once it works
 end-to-end, these are the pieces planned to move to Rust, in roughly the
 order it makes sense to tackle them.
 
+## Done
+
+- **`GameStreamCrypto.h`/`.mm` -> `Selene/RustCrypto`** (2026-07-16, branch
+  `rust/game-stream-crypto`): RSA-2048 identity generation/persistence,
+  AES-128-ECB, SHA-1/256, RSA-SHA256 sign/verify all moved to a Rust crate
+  using the `openssl` crate (kept on real OpenSSL rather than pure-Rust PKI
+  crates specifically to preserve exact PEM/PKCS#12 byte-for-byte
+  compatibility with already-persisted identities and macOS's Security
+  framework import requirements). `GameStreamCrypto.h`/the Swift call sites
+  are untouched - the ObjC++ `.mm` is now a thin buffer-marshalling shim
+  over a C FFI boundary (`Selene/RustCrypto/include/selene_crypto.h`).
+  Verified end-to-end against a real Sunshine host: fresh pairing, mTLS
+  connect, and an already-persisted identity loading unchanged.
+
 ## Candidates to port to Rust
 
-- **`GameStreamCrypto.h`/`.mm`** - RSA-2048 identity generation/persistence,
-  AES-128-ECB, SHA-1/256, RSA-SHA256 sign/verify. Pure OpenSSL today, no Qt -
-  the cleanest 1:1 port candidate (Rust `openssl` or `rsa`/`aes`/`sha1`/`sha2`
-  crates), exposed back to Swift via a C FFI boundary the same shape as the
-  current Objective-C++ one.
 - **`GameStreamPairing.swift`** - the 5-stage NVIDIA GameStream pairing
   handshake (HTTP orchestration, XML parsing, protocol state machine).
   Currently Swift + `URLSession`. Good Rust candidate (`reqwest`/`hyper` +

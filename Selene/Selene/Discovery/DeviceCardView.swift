@@ -6,6 +6,13 @@ import SwiftUI
 struct DeviceCardView: View {
     let host: DiscoveredHost
     var isSelected: Bool
+    /// Passed in by the caller (from `HostListViewModel`'s tracked
+    /// `pairedServerIds`) rather than read directly from `PairingStore`
+    /// here - a computed property reading UserDefaults inside `body` isn't
+    /// an `@Observable` dependency, so SwiftUI has no way to know to
+    /// re-render this view when pairing state changes elsewhere (e.g. the
+    /// "Unpair" context menu action).
+    var isPaired: Bool
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -59,11 +66,6 @@ struct DeviceCardView: View {
                     .padding(10)
             }
         }
-    }
-
-    private var isPaired: Bool {
-        guard let serverUniqueId = host.serverUniqueId else { return false }
-        return PairingStore.isPaired(serverUniqueId: serverUniqueId)
     }
 
     /// A curated, stable-per-host color (not a rainbow hash) - the same

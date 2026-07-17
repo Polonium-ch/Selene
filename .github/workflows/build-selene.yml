@@ -39,6 +39,11 @@ jobs:
       - name: Install OpenSSL
         run: brew install openssl@3
 
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
       - name: Build (Debug)
         run: |
           xcodebuild \

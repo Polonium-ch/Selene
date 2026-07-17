@@ -12,6 +12,12 @@ enum DiscoveryState: Equatable, Sendable {
 final class HostListViewModel {
     private(set) var hosts: [DiscoveredHost] = []
     private(set) var state: DiscoveryState = .idle
+    /// `serverUniqueId`s PairingStore currently considers paired, snapshot
+    /// at the last `recomputeHosts()` - an `@Observable`-tracked stand-in
+    /// for `PairingStore.isPaired`, since reading UserDefaults directly
+    /// inside a view's `body` isn't a dependency SwiftUI can see, so it
+    /// won't re-render when pairing state changes elsewhere.
+    private(set) var pairedServerIds: Set<String> = []
 
     private let discoveryService = HostDiscoveryService()
     private var updatesTask: Task<Void, Never>?
@@ -70,6 +76,28 @@ final class HostListViewModel {
         manualHosts.contains { $0.id == host.id }
     }
 
+    func isPaired(_ host: DiscoveredHost) -> Bool {
+        guard let serverUniqueId = host.serverUniqueId else { return false }
+        return pairedServerIds.contains(serverUniqueId)
+    }
+
+    /// Clears the local pairing record for `host` - the "Unpair" context
+    /// menu action. The host itself stays in the list (re-discovered via
+    /// mDNS, or still present in ManualHostStore); only PairingStore's
+    /// cached "we're paired" flag and pinned server cert are removed.
+    func unpair(_ host: DiscoveredHost) {
+        guard let serverUniqueId = host.serverUniqueId else { return }
+        PairingStore.markUnpaired(serverUniqueId: serverUniqueId)
+        recomputeHosts()
+    }
+
+    /// Re-derives `pairedServerIds` from PairingStore - call after any
+    /// action that might change pairing state without going through
+    /// `unpair()`, e.g. a `PairingSheetView` completing successfully.
+    func refreshPairingState() {
+        recomputeHosts()
+    }
+
     private func recomputeHosts() {
         var seenKeys = Set<String>()
         var merged: [DiscoveredHost] = []
@@ -80,5 +108,11 @@ final class HostListViewModel {
             merged.append(host)
         }
         hosts = merged.sorted { $0.name < $1.name }
+        pairedServerIds = Set(hosts.compactMap { host in
+            guard let uid = host.serverUniqueId, PairingStore.isPaired(serverUniqueId: uid) else {
+                return nil
+            }
+            return uid
+        })
     }
 }
