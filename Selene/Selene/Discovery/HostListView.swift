@@ -43,6 +43,7 @@ struct DevicesView: View {
         .sheet(item: $pairingHost) { host in
             PairingSheetView(host: host) { succeeded in
                 if succeeded {
+                    viewModel.refreshPairingState()
                     onOpenAppGrid(host)
                 }
             }
@@ -77,7 +78,8 @@ struct DevicesView: View {
             ForEach(filteredHosts) { host in
                 DeviceCardView(
                     host: host,
-                    isSelected: selectedHostID == host.id
+                    isSelected: selectedHostID == host.id,
+                    isPaired: viewModel.isPaired(host)
                 )
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) {
@@ -86,6 +88,7 @@ struct DevicesView: View {
                 .onTapGesture(count: 1) {
                     selectedHostID = host.id
                 }
+                .contextMenu { contextMenuItems(for: host) }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -129,6 +132,16 @@ struct DevicesView: View {
                 .onTapGesture(count: 1) {
                     selectedHostID = host.id
                 }
+                .contextMenu { contextMenuItems(for: host) }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func contextMenuItems(for host: DiscoveredHost) -> some View {
+        if viewModel.isPaired(host) {
+            Button("Unpair", role: .destructive) {
+                viewModel.unpair(host)
             }
         }
     }
@@ -139,7 +152,7 @@ struct DevicesView: View {
         // Paired hosts land on the app grid (Desktop/Steam Big Picture/etc,
         // with box art from /applist + /appasset) in the same window;
         // unpaired ones go through the PIN dialog first.
-        if let serverUniqueId = host.serverUniqueId, PairingStore.isPaired(serverUniqueId: serverUniqueId) {
+        if viewModel.isPaired(host) {
             onOpenAppGrid(host)
         } else {
             pairingHost = host

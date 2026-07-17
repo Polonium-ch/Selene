@@ -1,0 +1,15 @@
+[package]
+name = "selene-crypto"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "selene_crypto"
+crate-type = ["staticlib"]
+
+[dependencies]
+openssl = "0.10"
+
+[profile.release]
+panic = "abort"

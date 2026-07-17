@@ -15,6 +15,11 @@ struct SunshineServerInfo: Sendable {
     /// mirrors the legacy Qt client's `NvHTTP::getCurrentGame()`, which
     /// drives whether an app tile shows "Resume"/"Quit" instead of "Launch".
     var currentGameAppId: Int?
+    /// Whether the *server* still considers this client paired - the
+    /// unauthenticated ground truth for reconciling `PairingStore`'s local
+    /// cache, which never expires on its own if pairing is revoked from the
+    /// host side (e.g. unpaired from Sunshine's own web UI).
+    var isPairedOnServer: Bool?
 }
 
 /// Fetches `/serverinfo` over its unauthenticated plain-HTTP endpoint.
@@ -62,7 +67,8 @@ enum SunshineServerInfoFetcher {
             httpsPort: parser.fields["HttpsPort"].flatMap { UInt16($0) },
             // 0 means "nothing running" (GFE/Sunshine convention - see
             // NvHTTP::getCurrentGame()), so normalize that to nil.
-            currentGameAppId: parser.fields["currentgame"].flatMap { Int($0) }.flatMap { $0 == 0 ? nil : $0 }
+            currentGameAppId: parser.fields["currentgame"].flatMap { Int($0) }.flatMap { $0 == 0 ? nil : $0 },
+            isPairedOnServer: parser.fields["PairStatus"].map { $0 == "1" }
         )
     }
 
@@ -76,7 +82,7 @@ enum SunshineServerInfoFetcher {
 
 private final class ServerInfoXMLParser: NSObject, XMLParserDelegate {
     private(set) var fields: [String: String] = [:]
-    private static let trackedElements: Set<String> = ["hostname", "appversion", "uniqueid", "HttpsPort", "currentgame"]
+    private static let trackedElements: Set<String> = ["hostname", "appversion", "uniqueid", "HttpsPort", "currentgame", "PairStatus"]
     private var currentElement: String?
     private var buffer = ""
 

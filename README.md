@@ -192,6 +192,7 @@ Requirements:
 - Apple Silicon Mac
 - Xcode
 - OpenSSL (`brew install openssl@3`)
+- Rust (`rustup target add aarch64-apple-darwin`)
 
 ```bash
 cd Selene

@@ -104,6 +104,18 @@ final class HostDiscoveryService {
                     let serverInfo = await SunshineServerInfoFetcher.fetch(ip: host, port: port)
                     discoveryLogger.notice("serverinfo for \(name, privacy: .public): hostname=\(serverInfo?.hostname ?? "nil", privacy: .public) uniqueId=\(serverInfo?.uniqueId ?? "nil", privacy: .public)")
 
+                    // The host is the source of truth for pairing - if it
+                    // reports we're no longer paired (revoked from Sunshine's
+                    // own UI, for example), reconcile PairingStore's cache so
+                    // the "Paired" badge and double-click behavior stay
+                    // accurate instead of trusting a local flag that never
+                    // expires on its own.
+                    if let uniqueId = serverInfo?.uniqueId,
+                       serverInfo?.isPairedOnServer == false,
+                       PairingStore.isPaired(serverUniqueId: uniqueId) {
+                        PairingStore.markUnpaired(serverUniqueId: uniqueId)
+                    }
+
                     let discovered = DiscoveredHost(
                         id: name,
                         name: serverInfo?.hostname ?? name,
